@@ -1,22 +1,96 @@
-import Hero from "../components/Hero";
-import SocialProof from "../components/SocialProof";
-import Services from "../components/Services";
-import CaseStudies from "../components/CaseStudies";
-import Testimonials from "../components/Testimonials";
-import FAQ from "../components/FAQ";
+import type { Metadata } from "next";
+import Hero from "@/components/Hero";
+import SocialProof from "@/components/SocialProof";
+import Services from "@/components/Services";
+import CaseStudies from "@/components/CaseStudies";
+import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
+
+// ✅ PAGE-LEVEL METADATA — overrides layout defaults
+export const metadata: Metadata = {
+  title: "Home", // → renders as "Home | Leads In Click" (because of the template)
+  description:
+    "Leads In Click is a performance marketing agency specializing in paid ads, SEO, and lead generation funnels for B2B companies.",
+
+  alternates: {
+    canonical: "/", // ← prevents duplicate content issues
+  },
+
+  openGraph: {
+    title: "Leads In Click — We Build Lead Machines",
+    description:
+      "Stop wasting ad spend. We build predictable lead generation systems for B2B companies.",
+    url: "/",
+    images: [
+      {
+        url: "/og-home.png",
+        width: 1200,
+        height: 630,
+        alt: "Leads In Click Homepage",
+      },
+    ],
+  },
+};
+
+// ✅ JSON-LD SCHEMA DATA
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    // — Organization —
+    {
+      "@type": "Organization",
+      "@id": "https://leadsinclick.com/#organization",
+      name: "Leads In Click",
+      url: "https://leadsinclick.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://leadsinclick.com/logo.png",
+      },
+      sameAs: [
+        "https://www.linkedin.com/company/leadsinclick",
+        "https://twitter.com/leadsinclick",
+      ],
+    },
+    // — WebSite —
+    {
+      "@type": "WebSite",
+      "@id": "https://leadsinclick.com/#website",
+      url: "https://leadsinclick.com",
+      name: "Leads In Click",
+      publisher: { "@id": "https://leadsinclick.com/#organization" },
+    },
+    // — WebPage —
+    {
+      "@type": "WebPage",
+      "@id": "https://leadsinclick.com/#webpage",
+      url: "https://leadsinclick.com",
+      name: "Leads In Click — Growth Marketing Agency",
+      isPartOf: { "@id": "https://leadsinclick.com/#website" },
+      about: { "@id": "https://leadsinclick.com/#organization" },
+    },
+    // — BreadcrumbList —
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://leadsinclick.com",
+        },
+      ],
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <>
-      {/* ✅ FIX: Prevent horizontal overflow globally */}
-      <style>{`
-        html, body {
-          overflow-x: hidden;
-          max-width: 100vw;
-          margin: 0;
-          padding: 0;
-        }
-      `}</style>
+      {/* ✅ Inject JSON-LD into <head> */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <a
         href="#services"
@@ -25,15 +99,12 @@ export default function Home() {
         Skip to content
       </a>
 
-      {/* ✅ FIX: Constrain main to viewport width */}
-      <main className="w-full max-w-full overflow-x-hidden">
-        <Hero />
-        <SocialProof />
-        <Services />
-        <CaseStudies />
-        <Testimonials />
-        <FAQ />
-      </main>
+      <Hero />
+      <SocialProof />
+      <Services />
+      <CaseStudies />
+      <Testimonials />
+      <FAQ />
     </>
   );
 }

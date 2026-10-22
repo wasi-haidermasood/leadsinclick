@@ -14,7 +14,7 @@ const FAQS = [
   },
   {
     q: "What exactly is included in the free growth audit?",
-    a: "We analyse your website, Google presence, ad accounts (if any), social media and your top 3 competitors. You get a clear report showing where you're losing customers, what your competitors are doing right, and a step-by-step roadmap to fix it — whether you hire us or not. It normally costs ₹9,999; it's free this month.",
+    a: "We analyse your website, Google presence, ad accounts (if any), social media and your top 3 competitors. You get a clear report showing where you're losing customers, what your competitors are doing right, and a step-by-step roadmap to fix it — whether you hire us or not. It normally costs $9,999; it's free this month.",
   },
   {
     q: "Do I have to sign a long-term contract?",
@@ -22,7 +22,7 @@ const FAQS = [
   },
   {
     q: "Is ad spend included in your pricing?",
-    a: "Ad spend is separate and paid directly by you to Google or Meta — which means you fully own your ad accounts, data and audiences. We'll recommend a starting budget based on your goals (most clients start between ₹15,000–₹50,000/month) and manage every rupee of it transparently.",
+    a: "Ad spend is separate and paid directly by you to Google or Meta — which means you fully own your ad accounts, data and audiences. We'll recommend a starting budget based on your goals (most clients start between $15,000–$50,000/month) and manage every rupee of it transparently.",
   },
   {
     q: "How will I actually receive my leads?",

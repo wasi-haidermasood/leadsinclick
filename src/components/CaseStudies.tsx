@@ -9,7 +9,7 @@ const CASES = [
     image:
       "https://images.pexels.com/photos/5355920/pexels-photo-5355920.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
     alt: "Bright, modern dental clinic interior",
-    industry: "Dental Clinic Chain · Mumbai",
+    industry: "Dental Clinic Chain · Toronto",
     title: "From invisible on Google to fully booked chairs",
     services: ["GMB Ranking", "Google Ads", "Website"],
     metrics: [
@@ -22,11 +22,11 @@ const CASES = [
     image:
       "https://images.pexels.com/photos/14998334/pexels-photo-14998334.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
     alt: "Contemporary luxury apartment building facade",
-    industry: "Real Estate Developer · Pune",
+    industry: "Real Estate Developer · New York",
     title: "3,400 qualified home-buyer leads in one quarter",
     services: ["Lead Generation", "Meta Ads", "Landing Pages"],
     metrics: [
-      { value: "₹310", label: "Cost per lead" },
+      { value: "$15", label: "Cost per lead" },
       { value: "3,400+", label: "Qualified leads" },
       { value: "6.2×", label: "Return on ad spend" },
     ],
@@ -35,7 +35,7 @@ const CASES = [
     image:
       "https://images.pexels.com/photos/8311880/pexels-photo-8311880.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
     alt: "Customers browsing clothes in a modern fashion store",
-    industry: "D2C Fashion Brand · Delhi",
+    industry: "D2C Fashion Brand · Florida",
     title: "212% revenue growth with ads that finally profit",
     services: ["Meta Ads", "Social Media", "Website CRO"],
     metrics: [

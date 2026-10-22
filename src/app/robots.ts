@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://leadsinclick.in";
+  const baseUrl = "https://leadsinclick.com";
 
   return {
     rules: [
