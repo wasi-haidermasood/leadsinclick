@@ -18,7 +18,7 @@ type Plan = {
 const PLANS: Plan[] = [
   {
     name: "Launch",
-    monthly: 19999,
+    monthly: 2199,
     blurb:
       "For local businesses getting visible and generating their first steady enquiries.",
     features: [
@@ -34,7 +34,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Growth",
-    monthly: 39999,
+    monthly: 4999,
     popular: true,
     blurb:
       "Our most popular engine — ads, funnels and content working together to scale leads.",
@@ -51,7 +51,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Scale",
-    monthly: 74999,
+    monthly: 8999,
     blurb:
       "For ambitious brands ready to dominate their market across every channel.",
     features: [

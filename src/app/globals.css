@@ -48,9 +48,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
+  position: relative;
+  width: 100%;
   background-color: var(--color-void);
   color: #f4f5f3;
   font-family: var(--font-body);

@@ -5,7 +5,7 @@ import Pricing from "./Pricing";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Transparent, flat-fee growth plans starting at $19,999/month. No hidden charges, no lock-in. Get a complete growth team — designer, media buyer, copywriter and strategist included.",
+    "Transparent, flat-fee growth plans starting at $2199/month. No hidden charges, no lock-in. Get a complete growth team — designer, media buyer, copywriter and strategist included.",
 
   alternates: {
     canonical: "/pricing",
@@ -82,7 +82,7 @@ const jsonLd = {
         {
           "@type": "Offer",
           name: "Scale",
-          price: "74999",
+          price: "8999",
           priceCurrency: "$",
           url: "https://leadsinclick.com/pricing",
           availability: "https://schema.org/InStock",
