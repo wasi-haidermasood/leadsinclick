@@ -67,11 +67,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      data-scroll-behavior="smooth"  // ← THIS fixes the warning
-      className="overflow-x-hidden"
-    >
+   <html
+  lang="en"
+  data-scroll-behavior="smooth"
+  className="overflow-x-clip"
+>
       <body>
         <Suspense fallback={null}>
           <Navbar />

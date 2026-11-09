@@ -1,6 +1,7 @@
 "use client";
 
 import type { SVGProps } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./Navbar";
@@ -86,12 +87,30 @@ const COLUMNS = [
   {
     heading: "Services",
     links: [
-      { label: "Website Development", href: "/#services" },
-      { label: "Lead Generation", href: "/#services" },
-      { label: "Facebook & Instagram Ads", href: "/#services" },
-      { label: "Google Ads", href: "/#services" },
-      { label: "Social Media Management", href: "/#services" },
-      { label: "GMB Creation & Ranking", href: "/#services" },
+      {
+        label: "Website Development",
+        href: "/services/website-development",
+      },
+      {
+        label: "Lead Generation",
+        href: "/services/lead-generation",
+      },
+      {
+        label: "Facebook & Instagram Ads",
+        href: "/services/facebook-instagram-ads",
+      },
+      {
+        label: "Google Ads",
+        href: "/services/google-ads",
+      },
+      {
+        label: "Social Media Management",
+        href: "/services/social-media-management",
+      },
+      {
+        label: "GMB Creation & Ranking",
+        href: "/services/gmb-creation-ranking",
+      },
     ],
   },
   {
@@ -152,7 +171,7 @@ export default function Footer() {
               </p>
               <p>
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+923285154250"
                   className="flex items-center gap-2.5 transition-colors hover:text-brand"
                 >
                   <Phone className="h-4 w-4 shrink-0 text-brand" /> +923285154250
@@ -198,16 +217,23 @@ export default function Footer() {
                   {col.heading}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className="text-sm text-zinc-300 transition-colors duration-300 hover:text-brand"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
+                  {col.links.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          className={`text-sm transition-colors duration-300 hover:text-brand ${
+                            isActive
+                              ? "font-medium text-brand"
+                              : "text-zinc-300"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
@@ -216,16 +242,14 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 text-[13px] text-zinc-500 sm:flex-row">
-          <p>
-            © 2026 Leads In click. All rights reserved.
-          </p>
+          <p>© 2026 Leads In click. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#top" className="transition-colors hover:text-zinc-200">
+            <Link href="#top" className="transition-colors hover:text-zinc-200">
               Privacy Policy
-            </a>
-            <a href="#top" className="transition-colors hover:text-zinc-200">
+            </Link>
+            <Link href="#top" className="transition-colors hover:text-zinc-200">
               Terms of Service
-            </a>
+            </Link>
             <a href="#top" className="transition-colors hover:text-zinc-200">
               Back to top
             </a>
