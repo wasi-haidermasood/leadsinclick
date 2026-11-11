@@ -34,7 +34,6 @@ const LOGO_ALT = "Leads In Click";
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services", hasMegaMenu: true },
-  { label: "Results", href: "/#results" },
   { label: "Why Us", href: "/why-us" },
   { label: "Pricing", href: "/pricing" },
   { label: "Blog", href: "/blog" },
@@ -237,7 +236,6 @@ export default function Navbar() {
         )}
       >
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-center gap-2 px-5 text-xs text-zinc-300">
-          <Sparkles className="h-3.5 w-3.5 text-brand" />
           <span>
             Introducing Leads In Click&apos;s Full-Funnel Growth Engine for High-ROI Brands
           </span>

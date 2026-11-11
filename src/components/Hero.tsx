@@ -190,7 +190,7 @@ function CardArtwork({ id }: { id: ServiceId }) {
               NOISE
             </span>
             <span className="absolute top-[55px] right-4 text-sm text-[#BAF235]">
-              ✦
+              
             </span>
             <span className="absolute bottom-3 left-3 text-[6px] font-bold tracking-[0.17em] text-white/65">
               BUILT TO CONVERT
@@ -336,9 +336,7 @@ function CardArtwork({ id }: { id: ServiceId }) {
               <span className="absolute top-0 right-4 h-[68px] w-[18px] skew-y-[34deg] bg-white/20" />
             </div>
             <div className="absolute top-[91px] left-[41px] h-[34px] w-6 rounded-b-lg bg-gradient-to-r from-[#205B3C] via-[#69CE68] to-[#266D45] shadow-md" />
-            <span className="absolute top-10 right-0 z-20 text-sm text-white drop-shadow">
-              ✦
-            </span>
+           
           </div>
         </div>
       );
@@ -813,9 +811,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
         >
-          <span className="text-[14px] text-[#BAF235]" aria-hidden="true">
-            ✦
-          </span>
+          
           DIGITAL GROWTH PARTNER
         </motion.p>
 

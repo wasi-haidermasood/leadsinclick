@@ -1,16 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { IconType } from "react-icons";
 import {
-  ArrowUpRight,
-  Code2,
-  Magnet,
-  MapPin,
-  Megaphone,
-  Search,
-  Share2,
-  type LucideIcon,
-} from "lucide-react";
+  TbArrowUpRight,
+  TbCode,
+  TbMagnet,
+  TbMapPin,
+  TbSearch,
+  TbShare,
+  TbSpeakerphone,
+} from "react-icons/tb";
 import { cn } from "@/utils/cn";
 import { Accent, Reveal, SectionHeading } from "./ui";
 
@@ -23,7 +23,7 @@ type ElasticService = {
   metric: string;
   metricLabel: string;
   href: string; // real link
-  icon: LucideIcon;
+  icon: IconType;
   // Use an image for the background. Replace these with your own later.
   image: { src: string; alt: string };
 };
@@ -39,7 +39,7 @@ const SERVICES: ElasticService[] = [
     metric: "1.2M+",
     metricLabel: "leads delivered",
     href: "/services/lead-generation",
-    icon: Magnet,
+    icon: TbMagnet,
     image: {
       src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
       alt: "Analytics dashboard and charts",
@@ -55,7 +55,7 @@ const SERVICES: ElasticService[] = [
     metric: "2.4×",
     metricLabel: "more conversions",
     href: "/services/website-development",
-    icon: Code2,
+    icon: TbCode,
     image: {
       src: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80",
       alt: "Code on a screen",
@@ -71,7 +71,7 @@ const SERVICES: ElasticService[] = [
     metric: "6.4×",
     metricLabel: "average ROAS",
     href: "/services/meta-ads",
-    icon: Megaphone,
+    icon: TbSpeakerphone,
     image: {
       src: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=1600&q=80",
       alt: "Creative marketing visuals",
@@ -87,7 +87,7 @@ const SERVICES: ElasticService[] = [
     metric: "-38%",
     metricLabel: "lower cost per lead",
     href: "/services/google-ads",
-    icon: Search,
+    icon: TbSearch,
     image: {
       src: "https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=1600&q=80",
       alt: "Search and performance graphs",
@@ -103,7 +103,7 @@ const SERVICES: ElasticService[] = [
     metric: "3.1×",
     metricLabel: "engagement growth",
     href: "/services/social-media-management",
-    icon: Share2,
+    icon: TbShare,
     image: {
       src: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1600&q=80",
       alt: "Social apps on a phone",
@@ -119,7 +119,7 @@ const SERVICES: ElasticService[] = [
     metric: "#1",
     metricLabel: "Maps ranking goal",
     href: "/services/gmb-ranking",
-    icon: MapPin,
+    icon: TbMapPin,
     image: {
       src: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=1600&q=80",
       alt: "Map and location pins",
@@ -143,16 +143,11 @@ function ServiceElasticItem({
       href={item.href}
       onMouseEnter={onActivate}
       onFocus={onActivate}
-      onClick={(e) => {
-        // If you want "first click expands, second click navigates", uncomment block below.
-        // For now, click navigates (normal links) but still updates active.
+      onClick={() => {
+        // Click navigates normally (it's a real link) but still updates the active panel.
+        // For "first click expands, second click navigates", use:
+        // onClick={(e) => { if (!active) { e.preventDefault(); onActivate(); } }}
         onActivate();
-
-        // Example "expand first, navigate second":
-        // if (!active) {
-        //   e.preventDefault();
-        //   onActivate();
-        // }
       }}
       className={cn(
         "group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-panel outline-none",
@@ -192,11 +187,14 @@ function ServiceElasticItem({
         {/* Top row */}
         <div className="flex items-start justify-between gap-3">
           <span className="grid h-11 w-11 place-items-center rounded-2xl border border-brand/25 bg-brand/[0.08] text-brand transition-all duration-500 group-hover:scale-110 group-hover:bg-brand group-hover:text-black">
-            <Icon className="h-5 w-5" strokeWidth={2} />
+            <Icon className="h-5 w-5" aria-hidden="true" />
           </span>
 
           <span className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-zinc-300 transition-all duration-300 group-hover:border-brand/40 group-hover:bg-brand group-hover:text-black">
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+            <TbArrowUpRight
+              className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45"
+              aria-hidden="true"
+            />
           </span>
         </div>
 
@@ -238,7 +236,7 @@ function ServiceElasticItem({
             </ul>
 
             <div className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/80">
-              View Service <ArrowUpRight className="h-3.5 w-3.5" />
+              View Service <TbArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </div>
           </div>
 
