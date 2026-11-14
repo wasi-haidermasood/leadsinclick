@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Beams from "@/components/ui/Beams";
-import GoogleAdsHero from "./GoogleAdsHero";
+import GoogleAdshero from "./GoogleAdsHero";
 import GoogleAdsTrustSection from "./GoogleAdsTrustSection";
 import GoogleAdsProcessSection from "./GoogleAdsProcessSection";
 import GoogleAdsClosingSection from "./GoogleAdsClosingSection";
@@ -130,7 +130,7 @@ export default function GoogleAdsPage() {
         {/* FOREGROUND PAGE SECTIONS */}
         <div className="relative z-10">
           {/* SECTION 1: HERO & LIVE GOOGLE ADS ANALYTICS BENTO */}
-          <GoogleAdsHero />
+          <GoogleAdshero />
 
           {/* SECTION 2: WHY CHOOSE US & SOCIAL PROOF BENTO */}
           <GoogleAdsTrustSection />
