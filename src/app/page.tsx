@@ -4,6 +4,7 @@ import SocialProof from "@/components/SocialProof";
 import Services from "@/components/Services";
 import CaseStudies from "@/components/CaseStudies";
 import Testimonials from "@/components/Testimonials";
+import CTA from "@/components/CTA";
 import FAQ from "@/components/FAQ";
 
 // ✅ PAGE-LEVEL METADATA — overrides layout defaults
@@ -104,6 +105,7 @@ export default function Home() {
       <Services />
       <CaseStudies />
       <Testimonials />
+      <CTA/>
       <FAQ />
     </>
   );

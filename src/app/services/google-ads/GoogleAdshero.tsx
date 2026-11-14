@@ -1,693 +1,545 @@
 "use client";
-
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Beams from "@/components/ui/Beams";
 import {
-  ArrowUpRight,
+  Plus,
   Star,
-  Download,
-  CheckCircle2,
+  ArrowUpRight,
   TrendingUp,
-  Search,
   Sparkles,
-  BarChart3,
-  ShieldCheck,
-  PhoneCall,
   Target,
-  Sliders,
-  LineChart,
+  BarChart3,
 } from "lucide-react";
 
-/**
- * Plug in your custom image paths inside `/public` whenever ready.
- * Leave as `null` to use the built-in styled avatars/graphics.
- */
-const IMAGE_SLOTS = {
-  reviewer1: null as string | null, // e.g. "/images/google-ads/reviewer-1.jpg"
-  reviewer2: null as string | null, // e.g. "/images/google-ads/reviewer-2.jpg"
-  teamMember1: null as string | null, // e.g. "/images/google-ads/team-1.jpg"
-  teamMember2: null as string | null, // e.g. "/images/google-ads/team-2.jpg"
-};
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-const ORBITAL_CALLOUTS = [
-  {
-    label: "9.4/10 Avg. Quality Score",
-    position: "top-[16%] left-[5%] xl:left-[10%]",
-    delay: 0.1,
-  },
-  {
-    label: "7.2× Avg. Search ROAS",
-    position: "top-[12%] right-[5%] xl:right-[11%]",
-    delay: 0.25,
-  },
-  {
-    label: "-44% Cost Per Acquisition",
-    position: "top-[38%] left-[2%] xl:left-[6%]",
-    delay: 0.4,
-  },
-  {
-    label: "94% Top-of-Page Share",
-    position: "top-[36%] right-[2%] xl:right-[7%]",
-    delay: 0.55,
-  },
-];
-
-const TRUST_INDICATORS = [
-  {
-    metric: "7.2×",
-    label: "Average Search ROAS",
-    sub: "Across Search, PMax & Shopping",
-    icon: TrendingUp,
-  },
-  {
-    metric: "$24M+",
-    label: "Google Ad Spend Managed",
-    sub: "Profitably scaled across 40+ industries",
-    icon: BarChart3,
-  },
-  {
-    metric: "9.4/10",
-    label: "Average Quality Score",
-    sub: "Lower CPCs & top-of-page dominance",
-    icon: ShieldCheck,
-  },
-];
-
-const PROCESS_STEPS = [
-  { name: "Keyword & Buyer Intent Audit", status: "done" },
-  { name: "GTM & Enhanced Conversions", status: "done" },
-  { name: "High-Intent Search & PMax Build", status: "active" },
-  { name: "Negative Keyword Sculpting", status: "pending" },
-  { name: "Target ROAS Smart Scaling", status: "pending" },
-];
-
-function AvatarSlot({
-  src,
-  initials,
-  gradient,
-}: {
-  src: string | null;
-  initials: string;
-  gradient: string;
-}) {
-  if (src) {
-    return (
-      <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/15 shrink-0">
-        <Image src={src} alt={initials} fill className="object-cover" />
-      </div>
-    );
-  }
+export function GoogleIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
-    <div
-      className={`w-10 h-10 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-xs font-bold text-[#07090E] border border-white/20 shrink-0 shadow-inner`}
-    >
-      {initials}
-    </div>
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M23.49 12.275c0-.85-.075-1.665-.215-2.45H12v4.635h6.445c-.28 1.495-1.125 2.765-2.395 3.615v3.005h3.875c2.265-2.085 3.565-5.16 3.565-8.805z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 24c3.24 0 5.955-1.075 7.94-2.92l-3.875-3.005c-1.075.72-2.45 1.145-4.065 1.145-3.125 0-5.775-2.11-6.72-4.945H1.275v3.1C3.25 21.295 7.31 24 12 24z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.28 14.275c-.24-.72-.375-1.49-.375-2.275s.135-1.555.375-2.275v-3.1H1.275C.465 8.235 0 10.065 0 12s.465 3.765 1.275 5.375l4.005-3.1z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 4.78c1.76 0 3.345.605 4.59 1.795l3.44-3.44C17.95 1.19 15.235 0 12 0 7.31 0 3.25 2.705 1.275 6.625l4.005 3.1C6.225 6.89 8.875 4.78 12 4.78z"
+      />
+    </svg>
   );
 }
 
+export function GoogleAdsIcon({
+  className = "h-4 w-4",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        fill="#FBBC04"
+        d="M3.27 16.45L10.36 4.17a3.34 3.34 0 0 1 5.78 3.34L9.05 19.79a3.34 3.34 0 1 1-5.78-3.34z"
+      />
+      <path
+        fill="#4285F4"
+        d="M20.73 16.45L13.64 4.17a3.34 3.34 0 0 0-5.78 3.34l7.09 12.28a3.34 3.34 0 1 0 5.78-3.34z"
+      />
+      <circle cx="6.16" cy="18.12" r="3.34" fill="#34A853" />
+    </svg>
+  );
+}
+
+const FEATURES = [
+  {
+    platform: "search",
+    label: "High-Intent Google Search & Call-Only Ads",
+  },
+  {
+    platform: "pmax",
+    label: "Performance Max & Google Shopping Feeds",
+  },
+  {
+    platform: "tracking",
+    label: "GA4, GTM & Server-Side Enhanced Conversions",
+  },
+  {
+    platform: "remarketing",
+    label: "YouTube In-Stream & Display Remarketing",
+  },
+] as const;
+
 export default function GoogleAdsHero() {
   return (
-    <div className="relative bg-[#06070A] text-white selection:bg-[#BAF235] selection:text-[#07090E] overflow-hidden">
-      {/* =====================================================================
-          FIXED WEBGL BEAMS BACKGROUND
-      ===================================================================== */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <Beams
-          beamWidth={140}
-          color="#605f5fff"
-          rotation={30}
-          speed={1}
-          glow={0.6}
-          waveLength={233}
-          depth={1}
-          sharpness={0.6}
-          twist={0}
-          fillLight={0.3}
-          brightness={1.6}
-          grain={0.35}
-          variation={0}
-          mouseInteraction
-          mouseStrength={1}
-          fade={0}
-          opacity={1}
-          intro
-          lightMode={false}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 25%, rgba(6,7,10,0.18) 0%, rgba(6,7,10,0.78) 70%, rgba(6,7,10,0.96) 100%)",
-          }}
-        />
-      </div>
-
-      {/* =====================================================================
-          HERO + ORBITAL ARCS + BENTO DASHBOARD SECTION
-      ===================================================================== */}
-      <section className="relative z-10 pt-36 sm:pt-44 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1380px] mx-auto">
-        {/* Concentric Orbital Circles (Evalin-inspired backdrop) */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute top-[320px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] flex items-center justify-center"
-        >
-          <div className="absolute w-[520px] h-[520px] rounded-full border border-white/[0.06]" />
-          <div className="absolute w-[780px] h-[780px] rounded-full border border-white/[0.05]" />
-          <div className="absolute w-[1060px] h-[1060px] rounded-full border border-white/[0.04]" />
-          <div className="absolute w-[620px] h-[340px] rounded-full bg-[#BAF235]/[0.07] blur-[130px]" />
-        </div>
-
-        {/* Floating Orbital Metric Callouts (Desktop) */}
-        <div className="hidden lg:block">
-          {ORBITAL_CALLOUTS.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: item.delay }}
-              className={`absolute ${item.position} z-20 flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-[#0E1117]/85 backdrop-blur-md border border-white/[0.09] shadow-[0_10px_30px_rgba(0,0,0,0.5)]`}
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#BAF235] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#BAF235] shadow-[0_0_10px_#BAF235]" />
-              </span>
-              <span className="text-xs font-medium text-white/85 tracking-wide whitespace-nowrap">
-                {item.label}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Centered Hero Copy */}
-        <div className="relative z-20 max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.1] backdrop-blur-md mb-7"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-[#BAF235]" />
-            <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#BAF235]">
-              Google Search • Performance Max • Shopping • YouTube
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-serif text-4xl sm:text-6xl lg:text-[68px] font-bold tracking-tight text-white leading-[1.05]"
-          >
-            Own Page #1. Capture{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#BAF235] to-[#7CE852]">
-              Buyers Ready to Act.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-base sm:text-lg lg:text-xl text-white/65 max-w-2xl mx-auto leading-relaxed font-light"
-          >
-            Stop burning budget on broad, low-intent clicks. We engineer
-            precision Google Search, Performance Max, Shopping, and YouTube
-            campaigns backed by GTM Enhanced Conversions and relentless negative
-            keyword sculpting.
-          </motion.p>
-
-          {/* Dual CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Link
-              href="#contact"
-              className="group inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full bg-[#BAF235] text-[#07090E] font-bold text-sm sm:text-base shadow-[0_0_35px_rgba(186,242,53,0.35)] hover:bg-[#c8ff47] hover:shadow-[0_0_50px_rgba(186,242,53,0.55)] transition-all duration-300 w-full sm:w-auto"
-            >
-              <span>Launch My Google Ads</span>
-              <span className="w-7 h-7 rounded-full bg-[#07090E] text-[#BAF235] flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
-                <ArrowUpRight className="w-4 h-4" />
-              </span>
-            </Link>
-
-            <Link
-              href="#contact"
-              className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.12] text-white font-semibold text-sm sm:text-base backdrop-blur-md transition-all duration-300 w-full sm:w-auto"
-            >
-              <PhoneCall className="w-4 h-4 text-[#BAF235]" />
-              <span>Book a Free Strategy Call</span>
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* ===================================================================
-            TRUST INDICATORS BAR (3 Proof Pillars)
-        =================================================================== */}
+    <section className="relative overflow-hidden pt-24 pb-12 sm:pt-32 sm:pb-20 lg:pt-36">
+      <div className="mx-auto max-w-[1340px] px-3.5 sm:px-6 lg:px-8">
+        {/* MAIN GOOGLE EMERALD CONTAINER FRAME */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.38 }}
-          className="relative z-20 mt-12 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3.5"
+          transition={{ duration: 0.7, ease: EASE }}
+          className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0E8A5D] via-[#0B724C] to-[#064E34] px-4 pt-7 pb-6 text-white shadow-[0_32px_90px_-20px_rgba(14,138,93,0.45)] sm:rounded-[38px] sm:px-10 sm:pt-12 sm:pb-10 lg:px-14 lg:pt-14 lg:pb-12"
         >
-          {TRUST_INDICATORS.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-[#0D1017]/85 border border-white/[0.08] backdrop-blur-xl shadow-[0_12px_30px_rgba(0,0,0,0.35)] hover:border-[#BAF235]/30 transition-colors"
+          {/* BACKGROUND WIREFRAME GLOBE & PERSPECTIVE GRID */}
+          <div
+            className="pointer-events-none absolute inset-0 overflow-hidden"
+            aria-hidden="true"
+          >
+            <div className="absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-white/15 blur-3xl" />
+            <div className="absolute right-0 bottom-0 h-[420px] w-[420px] rounded-full bg-[#34D399]/20 blur-3xl" />
+
+            <svg
+              className="absolute inset-0 h-full w-full opacity-[0.14]"
+              viewBox="0 0 1200 720"
+              fill="none"
+              preserveAspectRatio="xMidYMid slice"
+            >
+              <g stroke="white" strokeWidth="1">
+                <circle cx="340" cy="360" r="170" />
+                <circle cx="340" cy="360" r="235" strokeDasharray="4 6" />
+                <ellipse cx="340" cy="360" rx="170" ry="68" />
+                <ellipse cx="340" cy="360" rx="170" ry="125" />
+                <ellipse cx="340" cy="360" rx="68" ry="170" />
+                <ellipse cx="340" cy="360" rx="125" ry="170" />
+                <line x1="0" y1="140" x2="1200" y2="140" strokeOpacity="0.45" />
+                <line x1="0" y1="290" x2="1200" y2="290" strokeOpacity="0.45" />
+                <line x1="0" y1="440" x2="1200" y2="440" strokeOpacity="0.45" />
+                <line x1="0" y1="590" x2="1200" y2="590" strokeOpacity="0.45" />
+                <line x1="220" y1="0" x2="80" y2="720" strokeOpacity="0.35" />
+                <line x1="480" y1="0" x2="410" y2="720" strokeOpacity="0.35" />
+                <line x1="760" y1="0" x2="830" y2="720" strokeOpacity="0.35" />
+                <line x1="1020" y1="0" x2="1150" y2="720" strokeOpacity="0.35" />
+              </g>
+            </svg>
+          </div>
+
+          {/* TOP ROW: DUAL GOOGLE + GOOGLE ADS BADGE + HEADLINE & DESCRIPTION */}
+          <div className="relative z-10 grid grid-cols-1 items-start gap-5 sm:gap-6 lg:grid-cols-12 lg:items-center lg:gap-8">
+            <div className="lg:col-span-7">
+              {/* Dual Google + Google Ads Pill Badge */}
+              <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 backdrop-blur-md">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-sm">
+                  <GoogleIcon className="h-3.5 w-3.5" />
+                </span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-sm">
+                  <GoogleAdsIcon className="h-3.5 w-3.5" />
+                </span>
+                <span className="text-xs font-semibold tracking-wide text-white/95">
+                  Google Search, PMax &amp; YouTube Ads Engine
+                </span>
+              </div>
+
+              <h1 className="text-[1.85rem] leading-[1.1] font-semibold tracking-[-0.03em] text-white sm:text-5xl lg:text-[3.55rem]">
+                Capture Buyers at the Exact Moment They Search on Google
+              </h1>
+            </div>
+            <div className="lg:col-span-5 lg:pl-6">
+              <p className="max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
+                Stop paying for broad, low-intent clicks that never convert. We
+                engineer high-converting Google Search, Performance Max,
+                Shopping, and YouTube campaigns backed by offline CRM conversion
+                tracking.
+              </p>
+            </div>
+          </div>
+
+          {/* DIVIDER */}
+          <div className="relative z-10 my-6 h-px w-full bg-white/20 sm:my-8" />
+
+          {/* 4-ITEM FEATURE STRIP WITH GOOGLE & GOOGLE ADS ICONS */}
+          <div className="relative z-10 grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+            {FEATURES.map((item, idx) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.1 + idx * 0.07,
+                  ease: EASE,
+                }}
+                className="flex items-center gap-3.5"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#BAF235]/10 border border-[#BAF235]/25 flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-[#BAF235]" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white backdrop-blur-sm sm:h-11 sm:w-11">
+                  {item.platform === "search" && (
+                    <GoogleIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  )}
+                  {item.platform === "pmax" && (
+                    <GoogleAdsIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  )}
+                  {item.platform === "tracking" && (
+                    <BarChart3 className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  )}
+                  {item.platform === "remarketing" && (
+                    <Target className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  )}
                 </div>
-                <div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                      {item.metric}
-                    </span>
-                    <span className="text-xs font-semibold text-[#BAF235]">
-                      {item.label}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-white/45 mt-0.5">{item.sub}</p>
-                </div>
-              </div>
-            );
-          })}
-        </motion.div>
-
-        {/* ===================================================================
-            EVALIN-INSPIRED BENTO GOOGLE ADS COMMAND CENTER
-        =================================================================== */}
-        <motion.div
-          initial={{ opacity: 0, y: 36 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.45 }}
-          className="relative z-20 mt-12 p-3 sm:p-5 rounded-[32px] bg-[#0B0E14]/90 border border-white/[0.09] backdrop-blur-2xl shadow-[0_30px_100px_rgba(0,0,0,0.75)]"
-        >
-          {/* Top Window Bar */}
-          <div className="flex items-center justify-between px-3 pb-3 mb-3 border-b border-white/[0.06] text-xs text-white/40">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80" />
-              <span className="ml-2 font-mono text-[11px] text-white/50">
-                LeadsInClick // Google Ads & GA4 Attribution Console
-              </span>
-            </div>
-            <div className="hidden sm:flex items-center gap-2 text-[11px] text-[#BAF235]">
-              <span className="w-2 h-2 rounded-full bg-[#BAF235] animate-pulse" />
-              Enhanced Conversions & Smart Bidding Active
-            </div>
+                <span className="text-[13px] leading-snug font-medium text-white/95 sm:text-sm">
+                  {item.label}
+                </span>
+              </motion.div>
+            ))}
           </div>
 
-          {/* 12-Column Bento Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {/* ---------------------------------------------------------------
-                LEFT COLUMN (3 cols): Quick Stats + 5-Step PPC Process
-            --------------------------------------------------------------- */}
-            <div className="lg:col-span-3 flex flex-col gap-4">
-              {/* Quick Stats Card */}
-              <div className="p-5 rounded-2xl bg-[#11151E] border border-white/[0.07] flex flex-col gap-4">
-                <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5">
-                  <span className="text-2xl font-extrabold text-white tracking-tight">
-                    142k
+          {/* BOTTOM BENTO GRID (3 COLUMNS ON DESKTOP) */}
+          <div className="relative z-10 mt-7 grid grid-cols-1 items-stretch gap-5 sm:mt-10 lg:grid-cols-12 lg:gap-6">
+            {/* COLUMN 1: PPC PERFORMANCE SUMMARY + INNER TESTIMONIAL CARD */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
+              className="flex flex-col justify-between rounded-[22px] bg-white p-4 text-slate-900 shadow-[0_20px_50px_rgba(10,20,60,0.18)] sm:rounded-[28px] sm:p-6 lg:col-span-4"
+            >
+              {/* Top Stats Header */}
+              <div className="flex items-start justify-between gap-2 px-0.5 pt-0.5">
+                <div>
+                  <span className="text-[11px] font-medium text-slate-400">
+                    Google Ads Summary
                   </span>
-                  <span className="text-xs text-white/55 text-right">
-                    High-Intent Search Clicks
+                  <div className="mt-2.5 flex items-center gap-4 sm:gap-7">
+                    <div>
+                      <p className="text-[11px] font-medium text-slate-400">
+                        Search ROAS
+                      </p>
+                      <p className="mt-0.5 text-lg font-bold tracking-tight text-slate-900 sm:text-2xl">
+                        6.4x
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium text-slate-400">
+                        Quality Score
+                      </p>
+                      <p className="mt-0.5 text-lg font-bold tracking-tight text-slate-900 sm:text-2xl">
+                        9.2/10
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Plus Action */}
+                <Link
+                  href="/contact"
+                  aria-label="Start new Google Ads campaign"
+                  className="group flex flex-col items-center gap-1 text-slate-500 transition hover:text-[#0E8A5D]"
+                >
+                  <span className="text-[11px] font-medium">Scale</span>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-slate-50 transition group-hover:border-[#0E8A5D]/30 group-hover:bg-[#0E8A5D]/10">
+                    <Plus className="h-4 w-4" />
+                  </span>
+                </Link>
+              </div>
+
+              {/* Inner Emerald Testimonial Card with Top-Left Tab & Bottom Cutout */}
+              <div className="relative mt-5 overflow-hidden rounded-[20px] bg-gradient-to-br from-[#0E8A5D] to-[#064E34] p-4 pt-10 text-white sm:mt-6 sm:rounded-[22px] sm:p-5 sm:pt-11">
+                {/* Top-Left White Notch Tab */}
+                <div className="absolute top-0 left-0 flex items-center gap-1.5 rounded-br-2xl bg-white px-3.5 py-1.5 text-[11px] font-semibold text-slate-900">
+                  <span>Google Partner</span>
+                  <GoogleIcon className="h-3 w-3" />
+                  <GoogleAdsIcon className="h-3 w-3" />
+                </div>
+
+                {/* Top-Right Stars */}
+                <div className="absolute top-3 right-3.5 flex items-center gap-1 text-xs font-semibold text-white">
+                  <div className="flex items-center gap-0.5 text-amber-300">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-3 w-3 fill-amber-300 text-amber-300"
+                      />
+                    ))}
+                  </div>
+                  <span className="ml-1 text-[11px] text-white/90">5.0</span>
+                </div>
+
+                {/* Reviewer Profile */}
+                <div className="mt-1 flex items-center gap-3">
+                  <img
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80"
+                    alt="David Thorne"
+                    className="h-10 w-10 rounded-full object-cover ring-2 ring-white/30"
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-white">
+                      David Thorne
+                    </p>
+                    <p className="text-[11px] text-white/75">
+                      VP of Growth, Apex MedTech Solutions
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quote */}
+                <p className="mt-3.5 pb-2 text-xs leading-relaxed text-white/90">
+                  &ldquo;Leads in Click rebuilt our Google Search and
+                  Performance Max structure, eliminating 42% in wasted spend and
+                  scaling inbound SQLs by 3.4x.&rdquo;
+                </p>
+
+                {/* Bottom Center Decorative White Notch */}
+                <div className="absolute -bottom-2 left-1/2 h-4 w-20 -translate-x-1/2 rounded-t-xl bg-white" />
+              </div>
+            </motion.div>
+
+            {/* COLUMN 2: QUICK ACTION CTA + AD REVENUE CARD */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.33, ease: EASE }}
+              className="flex flex-col justify-between gap-4 sm:gap-5 lg:col-span-3"
+            >
+              {/* Top Action Trigger */}
+              <Link
+                href="/contact"
+                className="group flex items-center gap-3.5 rounded-2xl bg-white/10 px-3 py-2.5 backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-2"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[#0E8A5D] shadow-md transition-transform duration-300 group-hover:scale-105 sm:h-12 sm:w-12">
+                  <Sparkles className="h-5 w-5" />
+                </span>
+                <div>
+                  <span className="block text-sm leading-tight font-semibold text-white sm:text-base">
+                    Get Free Google
+                    <br className="hidden sm:inline" /> Ads Audit
                   </span>
                 </div>
-                <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5">
-                  <span className="text-2xl font-extrabold text-[#BAF235] tracking-tight">
-                    41+
+              </Link>
+
+              {/* White Search & PMax Revenue Card */}
+              <div className="flex flex-1 flex-col justify-between rounded-[22px] bg-white p-4 text-slate-900 shadow-[0_20px_50px_rgba(10,20,60,0.18)] sm:rounded-[28px] sm:p-6">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="rounded-full bg-[#E6F6F0] px-3 py-1 text-[11px] font-semibold text-[#0B724C]">
+                    Tracked PPC Revenue
                   </span>
-                  <span className="text-xs text-white/55 text-right">
-                    Active Google Ad Accounts
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100">
+                      <GoogleIcon className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100">
+                      <GoogleAdsIcon className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
                 </div>
+
+                <div className="my-4 sm:my-5">
+                  <p className="text-2xl font-bold tracking-tight text-slate-900 sm:text-[1.85rem]">
+                    $4,190,450
+                  </p>
+
+                  {/* Split Progress Bar (Google Search vs PMax/Shopping) */}
+                  <div className="mt-3.5 flex items-center gap-2.5">
+                    <div className="flex h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+                      <div className="h-full w-[64%] rounded-l-full bg-[#0E8A5D]" />
+                      <div className="h-full w-[36%] rounded-r-full bg-[#4285F4]" />
+                    </div>
+                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-600">
+                      +92.4%
+                    </span>
+                  </div>
+                </div>
+
+                {/* Channel Breakdown Legend with Both Icons */}
+                <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-[11px]">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-slate-500">
+                      <GoogleIcon className="h-3 w-3 shrink-0" />
+                      <span className="truncate">Search Ads</span>
+                    </div>
+                    <p className="mt-0.5 pl-4 font-bold text-slate-800">64%</p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5 text-slate-500">
+                      <GoogleAdsIcon className="h-3 w-3 shrink-0" />
+                      <span className="truncate">PMax &amp; YT</span>
+                    </div>
+                    <p className="mt-0.5 pl-4 font-bold text-slate-800">36%</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* COLUMN 3: TRUST BANNER + ANALYSIS CHART CARD */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+              className="flex flex-col justify-between gap-4 sm:gap-5 lg:col-span-5"
+            >
+              {/* Top Pill Banner */}
+              <div className="flex items-center justify-between gap-3 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow-[0_14px_34px_rgba(10,20,60,0.14)] sm:rounded-[22px] sm:px-5 sm:py-3.5">
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-1.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 ring-2 ring-white">
+                      <GoogleIcon className="h-4 w-4" />
+                    </span>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 ring-2 ring-white">
+                      <GoogleAdsIcon className="h-4 w-4" />
+                    </span>
+                  </div>
+                  <p className="text-xs leading-snug font-semibold text-slate-800 sm:text-sm">
+                    Managing $12M+ in Profitable Annual
+                    <br className="hidden sm:inline" /> Google Search &amp; PMax
+                    Spend
+                  </p>
+                </div>
+                <Link
+                  href="/contact"
+                  aria-label="Talk to a Google Ads Strategist"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-[#0E8A5D] hover:bg-[#0E8A5D] hover:text-white"
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              {/* Bottom Analysis Wave Chart Card */}
+              <div className="flex flex-1 flex-col justify-between rounded-[22px] bg-white p-4 text-slate-900 shadow-[0_20px_50px_rgba(10,20,60,0.18)] sm:rounded-[28px] sm:p-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-extrabold text-white tracking-tight">
-                    5+
-                  </span>
-                  <span className="text-xs text-white/55 text-right">
-                    Years Google Partner Mastery
+                  <h2 className="text-base font-bold text-slate-900">
+                    Search Conversion &amp; CPA Velocity
+                  </h2>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-600">
+                    <TrendingUp className="h-3 w-3" />
+                    +318% Conversions
                   </span>
                 </div>
-              </div>
 
-              {/* Process Vertical Stepper Card */}
-              <div className="p-5 rounded-2xl bg-[#11151E] border border-white/[0.07] flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-sm font-bold text-white tracking-wide">
-                      PPC Launch Roadmap
-                    </h2>
-                    <span className="text-[11px] font-mono text-[#BAF235] bg-[#BAF235]/10 px-2 py-0.5 rounded-md">
-                      Step 3/5
-                    </span>
-                  </div>
+                {/* SVG Wave Area Chart */}
+                <div className="relative mt-3 h-36 w-full sm:h-40">
+                  <svg
+                    viewBox="0 0 420 150"
+                    className="h-full w-full overflow-visible"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="googleWaveGrad"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="0%"
+                          stopColor="#0E8A5D"
+                          stopOpacity="0.44"
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="#0E8A5D"
+                          stopOpacity="0.0"
+                        />
+                      </linearGradient>
+                    </defs>
 
-                  <div className="relative pl-2 space-y-4">
-                    {PROCESS_STEPS.map((step, i) => {
-                      const isDone = step.status === "done";
-                      const isActive = step.status === "active";
-                      return (
-                        <div
-                          key={i}
-                          className="relative flex items-center gap-3"
+                    {/* Horizontal Grid Lines & Y-Axis Labels */}
+                    {[
+                      { y: 20, label: "100" },
+                      { y: 50, label: "80" },
+                      { y: 80, label: "40" },
+                      { y: 110, label: "20" },
+                      { y: 138, label: "0" },
+                    ].map((row) => (
+                      <g key={row.label}>
+                        <text
+                          x="0"
+                          y={row.y + 3}
+                          className="fill-slate-400 text-[9px] font-medium"
                         >
-                          {i < PROCESS_STEPS.length - 1 && (
-                            <span
-                              className={`absolute left-[9px] top-5 w-[1.5px] h-5 ${
-                                isDone ? "bg-[#BAF235]" : "bg-white/10"
-                              }`}
-                            />
-                          )}
-                          <span
-                            className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold ${
-                              isDone
-                                ? "bg-[#BAF235] text-[#07090E]"
-                                : isActive
-                                ? "bg-[#BAF235]/20 border border-[#BAF235] text-[#BAF235] shadow-[0_0_10px_#BAF235]"
-                                : "bg-white/[0.05] border border-white/15 text-white/40"
-                            }`}
-                          >
-                            {isDone ? "✓" : i + 1}
-                          </span>
-                          <span
-                            className={`text-xs font-medium ${
-                              isDone || isActive
-                                ? "text-white"
-                                : "text-white/45"
-                            }`}
-                          >
-                            {step.name}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-white/45">
-                  <span>Avg. Campaign Go-Live</span>
-                  <span className="text-white font-semibold">4–6 Days</span>
-                </div>
-              </div>
-            </div>
-
-            {/* ---------------------------------------------------------------
-                RIGHT 9 COLUMNS: Top Row (Reviews + Assets) & Bottom Row (Campaign + Team)
-            --------------------------------------------------------------- */}
-            <div className="lg:col-span-9 grid grid-cols-1 lg:grid-cols-12 gap-4">
-              {/* TOP-LEFT (7 cols): Reviews Card */}
-              <div className="lg:col-span-7 p-5 rounded-2xl bg-[#11151E] border border-white/[0.07] flex flex-col justify-between">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-sm font-bold text-white">
-                      Client Search ROI
-                    </h2>
-                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.05] text-white/60">
-                      Verified Google Ads Accounts
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-[#BAF235]/10 border border-[#BAF235]/25 px-2.5 py-1 rounded-full">
-                    <Star className="w-3.5 h-3.5 fill-[#BAF235] text-[#BAF235]" />
-                    <span className="text-xs font-bold text-[#BAF235]">
-                      5/5
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  {/* Review 1 */}
-                  <div className="p-4 rounded-xl bg-[#0B0E14] border border-white/[0.06] flex flex-col justify-between">
-                    <p className="text-xs text-white/70 leading-relaxed">
-                      &ldquo;They restructured our bloated Search campaigns and
-                      added 1,800+ negative keywords. Our CPA dropped by 48% and
-                      inbound phone calls tripled in 45 days.&rdquo;
-                    </p>
-                    <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                      <div className="flex items-center gap-2.5">
-                        <AvatarSlot
-                          src={IMAGE_SLOTS.reviewer1}
-                          initials="BH"
-                          gradient="from-[#BAF235] to-[#4ADE80]"
+                          {row.label}
+                        </text>
+                        <line
+                          x1="26"
+                          y1={row.y}
+                          x2="412"
+                          y2={row.y}
+                          stroke="#E2E8F0"
+                          strokeDasharray="3 3"
+                          strokeWidth="1"
                         />
-                        <div>
-                          <div className="text-xs font-bold text-white">
-                            Brandon Hayes
-                          </div>
-                          <div className="text-[10px] text-white/45">
-                            Managing Partner, Apex HVAC
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-3 h-3 fill-[#BAF235] text-[#BAF235]"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                      </g>
+                    ))}
 
-                  {/* Review 2 */}
-                  <div className="p-4 rounded-xl bg-[#0B0E14] border border-white/[0.06] flex flex-col justify-between">
-                    <p className="text-xs text-white/70 leading-relaxed">
-                      &ldquo;Their Performance Max + Shopping feed overhaul took
-                      our Google Ads ROAS from 2.6× to 7.9× while scaling
-                      monthly spend from $15k to $65k.&rdquo;
-                    </p>
-                    <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                      <div className="flex items-center gap-2.5">
-                        <AvatarSlot
-                          src={IMAGE_SLOTS.reviewer2}
-                          initials="CR"
-                          gradient="from-[#38BDF8] to-[#818CF8]"
+                    {/* Vertical Dashed Guide Lines for Peaks */}
+                    {[85, 175, 270, 365].map((x, idx) => (
+                      <line
+                        key={idx}
+                        x1={x}
+                        y1="25"
+                        x2={x}
+                        y2="138"
+                        stroke="#CBD5E1"
+                        strokeDasharray="2 3"
+                        strokeWidth="1"
+                      />
+                    ))}
+
+                    {/* Smooth Multi-Peak Area Fill */}
+                    <path
+                      d="M 28 138 C 52 138, 65 72, 85 72 C 105 72, 118 138, 132 138 C 148 138, 158 58, 175 58 C 192 58, 205 138, 222 138 C 238 138, 252 46, 270 46 C 288 46, 302 138, 318 138 C 335 138, 348 34, 365 34 C 382 34, 396 138, 412 138 Z"
+                      fill="url(#googleWaveGrad)"
+                    />
+
+                    {/* Smooth Multi-Peak Stroke Path */}
+                    <path
+                      d="M 28 138 C 52 138, 65 72, 85 72 C 105 72, 118 138, 132 138 C 148 138, 158 58, 175 58 C 192 58, 205 138, 222 138 C 238 138, 252 46, 270 46 C 288 46, 302 138, 318 138 C 335 138, 348 34, 365 34 C 382 34, 396 138, 412 138"
+                      fill="none"
+                      stroke="#0E8A5D"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                    />
+
+                    {/* Peak Nodes */}
+                    {[
+                      { cx: 85, cy: 72 },
+                      { cx: 175, cy: 58 },
+                      { cx: 270, cy: 46, active: true },
+                      { cx: 365, cy: 34 },
+                    ].map((pt, i) => (
+                      <g key={i}>
+                        <circle
+                          cx={pt.cx}
+                          cy={pt.cy}
+                          r={pt.active ? "5" : "4"}
+                          fill="#FFFFFF"
+                          stroke="#0E8A5D"
+                          strokeWidth="2.5"
                         />
-                        <div>
-                          <div className="text-xs font-bold text-white">
-                            Clara Robinson
-                          </div>
-                          <div className="text-[10px] text-white/45">
-                            VP E-Commerce, Lumina Living
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-3 h-3 fill-[#BAF235] text-[#BAF235]"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                      </g>
+                    ))}
 
-              {/* TOP-RIGHT (5 cols): PPC Assets & Negative Keyword Vault Card */}
-              <div className="lg:col-span-5 p-4 rounded-2xl bg-[#11151E] border border-white/[0.07] flex flex-col justify-between">
-                {/* Gradient Visual Container with 2 Frosted Glass Folders */}
-                <div className="relative rounded-xl p-4 bg-gradient-to-br from-[#BAF235]/25 via-[#18261B] to-[#0D131D] border border-[#BAF235]/25 overflow-hidden">
-                  <div className="grid grid-cols-2 gap-3 relative z-10">
-                    {/* Folder 1 */}
-                    <div className="p-3.5 rounded-xl bg-[#0B0E14]/75 backdrop-blur-md border border-white/10 hover:border-[#BAF235]/40 transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-[#BAF235]/15 border border-[#BAF235]/30 flex items-center justify-center mb-2.5">
-                        <Search className="w-4 h-4 text-[#BAF235]" />
-                      </div>
-                      <div className="text-xs font-bold text-white">
-                        Search Intent Map
-                      </div>
-                      <div className="text-[10px] text-white/50 mt-0.5">
-                        Exact & Phrase Match Clusters
-                      </div>
-                    </div>
-
-                    {/* Folder 2 */}
-                    <div className="p-3.5 rounded-xl bg-[#0B0E14]/75 backdrop-blur-md border border-white/10 hover:border-[#BAF235]/40 transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-[#38BDF8]/15 border border-[#38BDF8]/30 flex items-center justify-center mb-2.5">
-                        <Sliders className="w-4 h-4 text-[#38BDF8]" />
-                      </div>
-                      <div className="text-xs font-bold text-white">
-                        GTM + GA4 Setup
-                      </div>
-                      <div className="text-[10px] text-white/50 mt-0.5">
-                        Enhanced & Offline Sync
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Downloadable Deliverable Pills */}
-                <div className="mt-3 space-y-2">
-                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#0B0E14] border border-white/[0.06] hover:border-white/15 transition-colors">
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-2 h-2 rounded-full bg-[#BAF235]" />
-                      <span className="text-xs font-mono text-white/80">
-                        Search_Intent_Blueprint.fig
-                      </span>
-                    </div>
-                    <Download className="w-3.5 h-3.5 text-white/45" />
-                  </div>
-
-                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#0B0E14] border border-white/[0.06] hover:border-white/15 transition-colors">
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-2 h-2 rounded-full bg-[#38BDF8]" />
-                      <span className="text-xs font-mono text-white/80">
-                        Negative_Keywords_Vault.csv
-                      </span>
-                    </div>
-                    <Download className="w-3.5 h-3.5 text-white/45" />
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTTOM-LEFT (7 cols): Active Google Ads Campaign Telemetry */}
-              <div className="lg:col-span-7 p-5 rounded-2xl bg-[#11151E] border border-white/[0.07] flex flex-col justify-between">
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-white/[0.06]">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] uppercase tracking-wider font-semibold text-white/45">
-                        Live Campaign
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#BAF235] bg-[#BAF235]/10 px-2 py-0.5 rounded-full">
-                        <CheckCircle2 className="w-3 h-3" /> tROAS Smart Bidding
-                      </span>
-                    </div>
-                    <h3 className="text-base font-bold text-white mt-1">
-                      High-Intent Search + Performance Max Engine
-                    </h3>
-                  </div>
-
-                  <span className="text-xs font-mono text-white/50 bg-white/[0.04] px-3 py-1.5 rounded-lg border border-white/[0.06]">
-                    Impression Share: 94.2%
-                  </span>
-                </div>
-
-                {/* 3 Big KPI Columns */}
-                <div className="grid grid-cols-3 gap-3 my-4">
-                  <div className="p-3.5 rounded-xl bg-[#0B0E14] border border-white/[0.05]">
-                    <div className="text-xl sm:text-2xl font-extrabold text-[#BAF235]">
-                      7.8×
-                    </div>
-                    <div className="text-[11px] text-white/50 mt-1">
-                      Blended Google ROAS
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 rounded-xl bg-[#0B0E14] border border-white/[0.05]">
-                    <div className="text-xl sm:text-2xl font-extrabold text-white">
-                      $14.20
-                    </div>
-                    <div className="text-[11px] text-white/50 mt-1">
-                      Avg. Cost Per Lead
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 rounded-xl bg-[#0B0E14] border border-white/[0.05]">
-                    <div className="text-xl sm:text-2xl font-extrabold text-white">
-                      +340%
-                    </div>
-                    <div className="text-[11px] text-white/50 mt-1">
-                      Qualified Sales Calls
-                    </div>
-                  </div>
-                </div>
-
-                {/* Progress Bar Footer */}
-                <div>
-                  <div className="flex items-center justify-between text-[11px] text-white/55 mb-1.5">
-                    <span>Search Exact-Match & PMax Asset Group Scaling</span>
-                    <span className="text-[#BAF235] font-semibold">
-                      9.6/10 Quality Score
-                    </span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div className="h-full w-[94%] rounded-full bg-gradient-to-r from-[#BAF235] to-[#4ADE80] shadow-[0_0_12px_#BAF235]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTTOM-RIGHT (5 cols): Dedicated Google Ads Growth Pod */}
-              <div className="lg:col-span-5 p-5 rounded-2xl bg-[#11151E] border border-white/[0.07] flex flex-col justify-between">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <h3 className="text-sm font-bold text-white">
-                      Your Google Ads Pod
-                    </h3>
-                    <p className="text-[11px] text-white/45">
-                      Certified Search, Shopping & GTM specialists
-                    </p>
-                  </div>
-                  <span className="text-[11px] font-semibold text-[#BAF235] bg-[#BAF235]/10 px-2.5 py-1 rounded-full">
-                    Google Partner
-                  </span>
-                </div>
-
-                <div className="space-y-2.5">
-                  {/* Member 1 */}
-                  <div className="p-3 rounded-xl bg-[#0B0E14] border border-white/[0.06] flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <AvatarSlot
-                        src={IMAGE_SLOTS.teamMember1}
-                        initials="AM"
-                        gradient="from-[#BAF235] to-[#10B981]"
+                    {/* Highlight Tooltip on 3rd Peak */}
+                    <g transform="translate(232, 12)">
+                      <rect
+                        x="0"
+                        y="0"
+                        width="76"
+                        height="22"
+                        rx="11"
+                        fill="#0E8A5D"
                       />
-                      <div>
-                        <div className="text-xs font-bold text-white">
-                          Arjun Mehta
-                        </div>
-                        <div className="text-[10px] text-white/45">
-                          Senior Google PPC Architect • Added 140 Negatives
-                        </div>
-                      </div>
-                    </div>
-                    <Target className="w-4 h-4 text-[#BAF235]" />
-                  </div>
-
-                  {/* Member 2 */}
-                  <div className="p-3 rounded-xl bg-[#0B0E14] border border-white/[0.06] flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <AvatarSlot
-                        src={IMAGE_SLOTS.teamMember2}
-                        initials="NK"
-                        gradient="from-[#60A5FA] to-[#A78BFA]"
-                      />
-                      <div>
-                        <div className="text-xs font-bold text-white">
-                          Neha Kapoor
-                        </div>
-                        <div className="text-[10px] text-white/45">
-                          GTM & GA4 Attribution Lead • Verified Offline Sync
-                        </div>
-                      </div>
-                    </div>
-                    <LineChart className="w-4 h-4 text-[#38BDF8]" />
-                  </div>
-                </div>
-
-                <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-white/45">
-                  <span>Search Term Pruning</span>
-                  <span className="text-white font-medium">
-                    Daily Waste Elimination
-                  </span>
+                      <text
+                        x="38"
+                        y="14"
+                        textAnchor="middle"
+                        className="fill-white text-[9.5px] font-semibold"
+                      >
+                        6.4x ROAS
+                      </text>
+                    </g>
+                  </svg>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
-      </section>
-    </div>
+
+        {/* STEPPED BOTTOM TAB SILHOUETTE */}
+        <div className="mx-auto hidden h-7 w-[54%] rounded-b-[28px] bg-[#064E34]/80 shadow-[0_22px_50px_rgba(14,138,93,0.28)] backdrop-blur-md lg:block" />
+      </div>
+    </section>
   );
 }

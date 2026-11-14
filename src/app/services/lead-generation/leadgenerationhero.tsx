@@ -1,818 +1,532 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
-  ArrowRight,
+  ArrowDown,
+  ArrowDownToLine,
+  ArrowLeftRight,
+  ArrowUp,
   ArrowUpRight,
-  Building2,
-  Calendar,
-  CheckCircle2,
-  Download,
-  FileSpreadsheet,
-  FileText,
-  Filter,
-  Folder,
-  MessageSquareDot,
-  PhoneCall,
+  DollarSign,
+  FolderKanban,
+  Plus,
+  ShieldCheck,
   Sparkles,
   Star,
-  Target,
   TrendingUp,
-  Users,
-  Zap,
+  Trophy,
 } from "lucide-react";
-import Beams from "@/components/ui/Beams";
-import { Accent, EASE, Reveal } from "@/components/ui";
-import { cn } from "@/utils/cn";
 
-/* -------------------------------------------------------------------------- */
-/* Optional Next/Image slots — set a path (e.g. "/team-1.jpg") when ready     */
-/* If left empty (""), clean built-in visuals/avatars render automatically.   */
-/* -------------------------------------------------------------------------- */
-const IMAGE_SLOTS = {
-  folderPreviewBanner: "", // e.g. "/images/lead-folders-bg.png"
-  teamMemberOne: "", // e.g. "/images/anna.jpg"
-  teamMemberTwo: "", // e.g. "/images/emma.jpg"
-};
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-const TRUST_INDICATORS = [
+const CHANNEL_FEATURES = [
   {
-    icon: Building2,
-    value: "350+",
-    label: "Businesses Helped",
-    detail: "Across 18+ high-ticket industries",
+    icon: DollarSign,
+    label: "High-ROI Paid Ads",
   },
   {
-    icon: Users,
-    value: "1.2M+",
-    label: "Qualified Leads Generated",
-    detail: "Delivered straight to WhatsApp & CRM",
+    icon: TrendingUp,
+    label: "Social Media Outreach",
   },
   {
-    icon: Target,
-    value: "16,400+",
-    label: "Campaigns Managed",
-    detail: "Across Meta, Google & YouTube",
-  },
-];
-
-const PROCESS_STEPS = [
-  { label: "Market & Competitor Analysis", active: true },
-  { label: "High-Intent Funnel Planning", active: true },
-  { label: "Ad Creative & Hook Engineering", active: false },
-  { label: "Omnichannel Launch & Scale", active: false },
-  { label: "Lead Quality & ROI Review", active: false },
-];
-
-const REVIEWS = [
-  {
-    initial: "L",
-    name: "Liam Carter",
-    role: "Founder, Apex Solar",
-    color: "bg-[#BAF235] text-black",
-    quote:
-      "“Amazing insights — we doubled our qualified conversions and booked 42 sales calls in weeks!”",
+    icon: ArrowLeftRight,
+    label: "Email Automation",
   },
   {
-    initial: "S",
-    name: "Sofia Mendes",
-    role: "Growth Director, Lumina Aesthetics",
-    color: "bg-[#8977C6] text-white",
-    quote:
-      "“Clear strategy, fast turnaround, and real buyer leads in our WhatsApp every morning.”",
-  },
-];
-
-const APPROACH_PILLARS = [
-  {
-    step: "01",
-    icon: Target,
-    title: "Precision Audience & Intent Targeting",
-    description:
-      "We don’t buy cheap traffic. We intercept high-intent buyers on Google Search and deploy AI-trained lookalike audiences on Meta to attract decision-makers ready to buy.",
-    metric: "-38% Lower Cost Per Lead",
-    accent: "from-[#BAF235]/20 via-[#BAF235]/5 to-transparent",
-    iconClass: "border-[#BAF235]/30 bg-[#BAF235]/10 text-[#BAF235]",
-  },
-  {
-    step: "02",
-    icon: Filter,
-    title: "Multi-Step Lead Qualification Funnels",
-    description:
-      "Stop wasting hours on tire-kickers. Our custom landing pages pre-qualify prospects by budget, timeline, and location before they ever hit your calendar.",
-    metric: "91% Lead-to-Call Show Rate",
-    accent: "from-[#42CED3]/20 via-[#42CED3]/5 to-transparent",
-    iconClass: "border-[#42CED3]/30 bg-[#42CED3]/10 text-[#42CED3]",
-  },
-  {
-    step: "03",
-    icon: MessageSquareDot,
-    title: "Instant WhatsApp & CRM Speed-to-Lead",
-    description:
-      "Every qualified lead triggers an instant alert to your sales team on WhatsApp and your CRM within 5 seconds—plus automated follow-up sequences that book the call.",
-    metric: "< 15 Sec Delivery Speed",
-    accent: "from-[#8977C6]/25 via-[#8977C6]/5 to-transparent",
-    iconClass: "border-[#8977C6]/30 bg-[#8977C6]/15 text-[#C8BAFA]",
+    icon: ShieldCheck,
+    label: "Verified B2B & B2C Leads",
   },
 ];
 
 export default function LeadGenerationHero() {
+  const reducedMotion = useReducedMotion() ?? false;
+
   return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-[#07070B] pt-[104px] text-white">
-      {/* ===================================================================== */}
-      {/* WEBGL BEAMS BACKGROUND                                                */}
-      {/* ===================================================================== */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-20 overflow-hidden"
-      >
-        <Beams
-          beamWidth={140}
-          color="#605f5fff"
-          rotation={30}
-          speed={1}
-          glow={0.6}
-          waveLength={233}
-          depth={1}
-          sharpness={0.6}
-          twist={0}
-          fillLight={0.3}
-          brightness={1.6}
-          grain={0.35}
-          variation={0}
-          mouseInteraction
-          mouseStrength={1}
-          fade={0}
-          opacity={1}
-          intro
-          lightMode={false}
-          className="h-full w-full"
-        />
-        {/* Soft vignette overlay so text & Bento cards remain crisp */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 24%, rgba(7, 7, 11, 0.18) 0%, rgba(7, 7, 11, 0.68) 68%, rgba(7, 7, 11, 0.9) 100%)",
-          }}
-        />
-      </div>
-
-      {/* ===================================================================== */}
-      {/* TOP AMBIENT GLOWS & ORBITAL ARCS                                      */}
-      {/* ===================================================================== */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[680px] w-[1280px] -translate-x-1/2 rounded-full opacity-30 blur-[150px]"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, #7963B9 0%, #455FDC 35%, rgba(184,241,53,0.18) 65%, transparent 80%)",
-        }}
-      />
-
-      {/* Concentric Orbital Rings */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-[210px] left-1/2 -z-10 h-[1100px] w-[1100px] -translate-x-1/2 rounded-full border border-white/[0.07] sm:h-[1320px] sm:w-[1320px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-[290px] left-1/2 -z-10 h-[920px] w-[920px] -translate-x-1/2 rounded-full border border-white/[0.06] sm:h-[1120px] sm:w-[1120px]"
-      />
-
-      {/* ===================================================================== */}
-      {/* HERO SECTION                                                          */}
-      {/* ===================================================================== */}
-      <section className="relative z-10 mx-auto max-w-7xl px-5 pt-8 pb-20 sm:px-8 sm:pt-14">
-        {/* Floating Orbital Trust Callout #1 — Left */}
+    <section
+      aria-labelledby="leadgen-hero-title"
+      className="relative w-full bg-transparent px-3 pt-24 pb-12 sm:px-6 sm:pt-32 sm:pb-20 lg:px-10 lg:pt-36"
+    >
+      <div className="mx-auto max-w-[1320px]">
+        {/* Main Electric Blue Hero Frame */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.35, duration: 0.7, ease: EASE }}
-          className="pointer-events-none absolute top-28 left-6 hidden items-center gap-2.5 lg:flex xl:left-12"
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand shadow-[0_0_10px_#b8f135]" />
-          </span>
-          <div>
-            <p className="font-display text-sm font-bold text-brand">+410%</p>
-            <p className="text-[11px] font-medium text-zinc-300">
-              conversion lift
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Floating Orbital Trust Callout #2 — Top Right */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.45, duration: 0.7, ease: EASE }}
-          className="pointer-events-none absolute top-16 right-10 hidden items-center gap-2.5 lg:flex xl:right-20"
-        >
-          <span className="h-2.5 w-2.5 rounded-full bg-brand shadow-[0_0_10px_#b8f135]" />
-          <div>
-            <p className="font-display text-sm font-bold text-brand">1.2M+</p>
-            <p className="text-[11px] font-medium text-zinc-300">
-              leads generated
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Floating Orbital Trust Callout #3 — Mid Right */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.55, duration: 0.7, ease: EASE }}
-          className="pointer-events-none absolute top-64 right-4 hidden items-center gap-2.5 text-right lg:flex xl:right-8"
-        >
-          <div>
-            <p className="font-display text-sm font-bold text-brand">16.4k+</p>
-            <p className="text-[11px] font-medium text-zinc-300">
-              campaigns managed
-            </p>
-          </div>
-          <span className="h-2.5 w-2.5 rounded-full bg-brand shadow-[0_0_10px_#b8f135]" />
-        </motion.div>
-
-        {/* Floating Orbital Trust Callout #4 — Mid Left */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6, duration: 0.7, ease: EASE }}
-          className="pointer-events-none absolute top-64 left-4 hidden items-center gap-2.5 lg:flex xl:left-8"
-        >
-          <span className="h-2.5 w-2.5 rounded-full bg-[#42CED3] shadow-[0_0_10px_#42CED3]" />
-          <div>
-            <p className="font-display text-sm font-bold text-[#42CED3]">
-              350+
-            </p>
-            <p className="text-[11px] font-medium text-zinc-300">
-              businesses helped
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Centered Hero Copy */}
-        <div className="mx-auto max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.05] px-4 py-1.5 text-xs font-semibold text-zinc-200 backdrop-blur-md"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-brand" />
-            <span>Full-Funnel Lead Generation Engine</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08, duration: 0.7, ease: EASE }}
-            className="mt-6 font-display text-4xl leading-[1.06] font-bold tracking-tight text-balance text-white sm:text-6xl lg:text-[66px]"
-          >
-            We Turn Clicks <br className="hidden sm:inline" />
-            Into <Accent>Customers.</Accent>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.16, duration: 0.7, ease: EASE }}
-            className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-pretty text-zinc-300 sm:text-lg"
-          >
-            We build and manage high-converting ad campaigns, qualification
-            funnels, and instant WhatsApp &amp; CRM pipelines—so your sales team
-            wakes up to exclusive, ready-to-buy leads every single day.
-          </motion.p>
-
-          {/* Primary & Secondary CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.24, duration: 0.7, ease: EASE }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3.5"
-          >
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-brand py-2.5 pr-2.5 pl-6 text-sm font-bold text-black shadow-[0_12px_36px_rgba(184,241,53,0.32)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c6f752] hover:shadow-[0_16px_44px_rgba(184,241,53,0.45)]"
-            >
-              <span>Get More Leads</span>
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-black text-brand transition-transform duration-300 group-hover:rotate-45">
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
-              </span>
-            </Link>
-
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-white/[0.16] bg-white/[0.06] px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.1]"
-            >
-              <Calendar className="h-4 w-4 text-brand" />
-              <span>Book a Free Strategy Call</span>
-            </Link>
-          </motion.div>
-
-          {/* Trust Indicators Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.32, duration: 0.7, ease: EASE }}
-            className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3"
-          >
-            {TRUST_INDICATORS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-3.5 rounded-2xl border border-white/[0.1] bg-[#101118]/80 px-4 py-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
-                >
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-brand/25 bg-brand/10 text-brand">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="font-display text-xl font-bold text-white">
-                        {item.value}
-                      </span>
-                      <span className="text-xs font-semibold text-zinc-200">
-                        {item.label}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-zinc-400">{item.detail}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </motion.div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* BENTO DASHBOARD FRAME                                               */}
-        {/* =================================================================== */}
-        <motion.div
-          initial={{ opacity: 0, y: 36 }}
+          initial={reducedMotion ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.38, duration: 0.85, ease: EASE }}
-          className="relative mx-auto mt-14 max-w-6xl rounded-[32px] border border-white/[0.12] bg-[#0D0E14]/88 p-4 shadow-[0_32px_100px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-2xl sm:p-6"
+          transition={{ duration: 0.8, ease: EASE }}
+          className="relative isolate overflow-hidden rounded-[24px] border border-white/15 bg-gradient-to-br from-[#2348E8] via-[#274FF2] to-[#1D3FD6] px-4 pt-7 pb-6 text-white shadow-[0_32px_90px_rgba(0,0,0,0.65)] sm:rounded-[32px] sm:px-8 sm:pt-12 sm:pb-12 lg:px-16 lg:pt-16 lg:pb-14"
         >
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-            {/* --------------------------------------------------------------- */}
-            {/* LEFT COLUMN: Weekly Growth Stats + Process Stepper              */}
-            {/* --------------------------------------------------------------- */}
-            <div className="flex flex-col gap-4 lg:col-span-3">
-              {/* Top Mini Stats Card */}
-              <div className="rounded-2xl border border-white/[0.08] bg-[#13141C]/95 p-5">
-                <div className="space-y-3.5">
-                  <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                    <span className="text-xs font-medium text-zinc-400">
-                      Growth this week:
-                    </span>
-                    <span className="inline-flex items-center gap-1 font-display text-sm font-bold text-brand">
-                      +92% <TrendingUp className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
+          {/* Background 3D Wireframe Globe & Perspective Grid SVG */}
+          <svg
+            className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-25"
+            viewBox="0 0 1440 900"
+            fill="none"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+          >
+            <g stroke="white" strokeWidth="1" strokeOpacity="0.45">
+              <circle cx="420" cy="430" r="460" />
+              <ellipse cx="420" cy="430" rx="370" ry="460" />
+              <ellipse cx="420" cy="430" rx="260" ry="460" />
+              <ellipse cx="420" cy="430" rx="140" ry="460" />
+              <ellipse
+                cx="420"
+                cy="430"
+                rx="460"
+                ry="140"
+                transform="rotate(-14 420 430)"
+              />
+              <ellipse
+                cx="420"
+                cy="430"
+                rx="460"
+                ry="260"
+                transform="rotate(-14 420 430)"
+              />
+              <ellipse
+                cx="420"
+                cy="430"
+                rx="460"
+                ry="370"
+                transform="rotate(-14 420 430)"
+              />
+            </g>
 
-                  <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                    <span className="text-xs font-medium text-zinc-400">
-                      New Leads today:
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 font-display text-sm font-bold text-[#9884D6]">
-                      130 <Users className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
+            <g stroke="white" strokeWidth="1" strokeOpacity="0.3">
+              <line x1="780" y1="0" x2="1440" y2="520" />
+              <line x1="920" y1="0" x2="1440" y2="410" />
+              <line x1="640" y1="0" x2="1440" y2="650" />
+              <line x1="500" y1="0" x2="1380" y2="900" />
+              <line x1="1440" y1="120" x2="760" y2="900" />
+              <line x1="1440" y1="280" x2="910" y2="900" />
+              <line x1="1440" y1="450" x2="1060" y2="900" />
+            </g>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-zinc-400">
-                      Budget used:
-                    </span>
-                    <span className="font-display text-sm font-bold text-emerald-400">
-                      $1.2K
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <defs>
+              <radialGradient id="heroGlow" cx="0.2" cy="0.15" r="0.6">
+                <stop offset="0%" stopColor="#6E8EFF" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#2348E8" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            <rect width="1440" height="900" fill="url(#heroGlow)" />
+          </svg>
 
-              {/* Process Vertical Timeline Card */}
-              <div className="flex-1 rounded-2xl border border-white/[0.08] bg-[#13141C]/95 p-5">
-                <p className="font-display text-sm font-semibold text-white">
-                  Process
-                </p>
-
-                <div className="relative mt-4 space-y-4 pl-4">
-                  {/* Vertical connecting line */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute top-2 bottom-2 left-[5px] w-[1.5px] bg-gradient-to-b from-brand via-[#8977C6] to-white/10"
-                  />
-
-                  {PROCESS_STEPS.map((step) => (
-                    <div
-                      key={step.label}
-                      className="relative flex items-center gap-3"
-                    >
-                      <span
-                        className={cn(
-                          "relative z-10 -ml-[15px] h-2.5 w-2.5 rounded-full ring-4 ring-[#13141C]",
-                          step.active
-                            ? "bg-brand shadow-[0_0_8px_#b8f135]"
-                            : "bg-[#8977C6]/60"
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          "text-xs font-medium",
-                          step.active ? "text-white" : "text-zinc-400"
-                        )}
-                      >
-                        {step.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* TOP ROW: Title & Description */}
+          <div className="grid grid-cols-1 items-end gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-7">
+              <motion.h1
+                id="leadgen-hero-title"
+                initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+                className="font-display text-[clamp(1.9rem,6vw,4.5rem)] leading-[1.06] font-semibold tracking-[-0.035em] text-white"
+              >
+                Smart Multi-Channel
+                <br />
+                Lead Generation
+              </motion.h1>
             </div>
 
-            {/* --------------------------------------------------------------- */}
-            {/* RIGHT 9 COLUMNS: Reviews, Folders, Campaign & Team              */}
-            {/* --------------------------------------------------------------- */}
-            <div className="grid grid-cols-1 gap-4 lg:col-span-9 lg:grid-cols-9">
-              {/* MIDDLE TOP: Reviews Card (4 cols) */}
-              <div className="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#13141C]/95 p-5 lg:col-span-4">
-                <div className="flex items-center justify-between">
-                  <p className="font-display text-sm font-semibold text-white">
-                    Reviews
-                  </p>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-300">
-                    <Star className="h-3.5 w-3.5 fill-amber-300" /> 4.9/5
-                  </span>
-                </div>
-
-                <div className="mt-3.5 space-y-3">
-                  {REVIEWS.map((review) => (
-                    <div
-                      key={review.name}
-                      className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3.5"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          className={cn(
-                            "grid h-6 w-6 shrink-0 place-items-center rounded-md text-xs font-bold",
-                            review.color
-                          )}
-                        >
-                          {review.initial}
-                        </span>
-                        <div>
-                          <p className="text-xs font-semibold text-white">
-                            {review.name}
-                          </p>
-                          <p className="text-[10px] text-zinc-500">
-                            {review.role}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="mt-2 text-xs leading-relaxed text-zinc-300">
-                        {review.quote}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* RIGHT TOP: Green Folder Showcase + File Pills (5 cols) */}
-              <div className="flex flex-col gap-3 lg:col-span-5">
-                {/* Green Wavy Card with 2 Frosted Folders */}
-                <div
-                  className="relative flex flex-1 items-center justify-around overflow-hidden rounded-2xl border border-white/20 p-6 shadow-inner"
-                  style={{
-                    background:
-                      "radial-gradient(120% 130% at 15% 10%, #A5F08C 0%, #68C852 48%, #2E8B3C 100%)",
-                  }}
-                >
-                  {IMAGE_SLOTS.folderPreviewBanner ? (
-                    <Image
-                      src={IMAGE_SLOTS.folderPreviewBanner}
-                      alt="Campaign Assets"
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <>
-                      {/* Decorative organic wave highlights */}
-                      <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -top-16 -right-12 h-52 w-52 rounded-full bg-white/25 blur-2xl"
-                      />
-                      <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -bottom-20 left-1/3 h-48 w-48 rounded-full bg-[#0E2414]/25 blur-2xl"
-                      />
-
-                      {/* Folder 1: Ad Creatives */}
-                      <div className="group relative z-10 flex flex-col items-center text-center">
-                        <div className="relative flex h-24 w-28 items-center justify-center rounded-2xl border border-white/60 bg-white/80 shadow-[0_14px_30px_rgba(14,36,20,0.25)] backdrop-blur-md transition-transform duration-300 group-hover:-translate-y-1">
-                          <div className="absolute -top-2 left-3 h-3 w-11 rounded-t-md bg-white/90" />
-                          <Folder className="h-10 w-10 fill-[#68C852]/30 text-[#14361D]" />
-                        </div>
-                        <p className="mt-3 font-display text-xs font-bold text-white drop-shadow">
-                          Ad Creatives
-                        </p>
-                        <p className="text-[11px] font-medium text-white/85">
-                          62 items
-                        </p>
-                      </div>
-
-                      {/* Folder 2: Sales Scripts */}
-                      <div className="group relative z-10 flex flex-col items-center text-center">
-                        <div className="relative flex h-24 w-28 items-center justify-center rounded-2xl border border-white/60 bg-white/80 shadow-[0_14px_30px_rgba(14,36,20,0.25)] backdrop-blur-md transition-transform duration-300 group-hover:-translate-y-1">
-                          <div className="absolute -top-2 left-3 h-3 w-11 rounded-t-md bg-white/90" />
-                          <Folder className="h-10 w-10 fill-[#68C852]/30 text-[#14361D]" />
-                        </div>
-                        <p className="mt-3 font-display text-xs font-bold text-white drop-shadow">
-                          Sales Scripts
-                        </p>
-                        <p className="text-[11px] font-medium text-white/85">
-                          36 items
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* File Download Pills Row (SalesPlan.pptx & Report.xlsx) */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-[#13141C]/95 px-3.5 py-2.5">
-                    <div className="flex items-center gap-2.5">
-                      <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#F77D9E]/15 text-[#F77D9E]">
-                        <FileText className="h-4 w-4" />
-                      </span>
-                      <div>
-                        <p className="text-xs font-semibold text-white">
-                          SalesPlan.pptx
-                        </p>
-                        <p className="text-[10px] text-zinc-500">4.9mb</p>
-                      </div>
-                    </div>
-                    <Download className="h-3.5 w-3.5 text-zinc-500" />
-                  </div>
-
-                  <div className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-[#13141C]/95 px-3.5 py-2.5">
-                    <div className="flex items-center gap-2.5">
-                      <span className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-400/15 text-emerald-400">
-                        <FileSpreadsheet className="h-4 w-4" />
-                      </span>
-                      <div>
-                        <p className="text-xs font-semibold text-white">
-                          Report.xlsx
-                        </p>
-                        <p className="text-[10px] text-zinc-500">6.1mb</p>
-                      </div>
-                    </div>
-                    <Download className="h-3.5 w-3.5 text-zinc-500" />
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTTOM MIDDLE: Campaign Spotlight Card (5 cols) */}
-              <div className="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#13141C]/95 p-5 lg:col-span-5">
-                <div className="flex items-center gap-3.5">
-                  <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-brand/30 bg-brand/10">
-                    <Sparkles className="h-5 w-5 text-brand" />
-                  </div>
-                  <div>
-                    <p className="font-display text-sm font-semibold text-white">
-                      Nexera Growth Partners
-                    </p>
-                    <p className="text-xs text-zinc-400">
-                      Lead Generation Campaign · Active
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/[0.06] pt-4">
-                  <div>
-                    <p className="font-display text-xl font-bold text-white sm:text-2xl">
-                      $320,100
-                    </p>
-                    <p className="mt-0.5 text-[11px] text-zinc-500">
-                      Revenue generated
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-display text-xl font-bold text-brand sm:text-2xl">
-                      91%
-                    </p>
-                    <p className="mt-0.5 text-[11px] text-zinc-500">
-                      Conversion increase
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-display text-xl font-bold text-white sm:text-2xl">
-                      +2,120
-                    </p>
-                    <p className="mt-0.5 text-[11px] text-zinc-500">
-                      Qualified Leads
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTTOM RIGHT: Meet the Team / Activity Card (4 cols) */}
-              <div className="rounded-2xl border border-white/[0.08] bg-[#13141C]/95 p-5 lg:col-span-4">
-                <p className="font-display text-sm font-semibold text-white">
-                  Meet the team
-                </p>
-
-                <div className="mt-4 space-y-3.5">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-gradient-to-br from-[#F77D9E] to-[#8977C6] text-xs font-bold text-white">
-                        {IMAGE_SLOTS.teamMemberOne ? (
-                          <Image
-                            src={IMAGE_SLOTS.teamMemberOne}
-                            alt="Anna"
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          "AN"
-                        )}
-                      </span>
-                      <div>
-                        <p className="text-xs font-semibold text-white">Anna</p>
-                        <p className="text-[11px] text-zinc-400">
-                          Campaign Strategy Approved
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-zinc-500">1min ago</span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
-                    <div className="flex items-center gap-3">
-                      <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-gradient-to-br from-[#42CED3] to-[#536DEB] text-xs font-bold text-white">
-                        {IMAGE_SLOTS.teamMemberTwo ? (
-                          <Image
-                            src={IMAGE_SLOTS.teamMemberTwo}
-                            alt="Emma"
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          "EM"
-                        )}
-                      </span>
-                      <div>
-                        <p className="text-xs font-semibold text-white">Emma</p>
-                        <p className="text-[11px] text-zinc-400">
-                          Uploaded Sales Assets
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-zinc-500">2h ago</span>
-                  </div>
-                </div>
-              </div>
+            <div className="lg:col-span-5 lg:pb-2">
+              <motion.p
+                initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+                className="max-w-[520px] text-[13.5px] leading-[1.6] font-normal text-white/85 sm:text-[15px] lg:max-w-[440px] lg:text-[15.5px] lg:leading-[1.65]"
+              >
+                Capture, nurture, and convert high-intent prospects easily,
+                quickly, and predictably. Leads in Click unifies social media,
+                email marketing, and paid ads in one intuitive growth engine.
+              </motion.p>
             </div>
           </div>
-        </motion.div>
-      </section>
 
-      {/* ===================================================================== */}
-      {/* SECOND SECTION: "OUR APPROACH — We turn strategy into scale"          */}
-      {/* ===================================================================== */}
-      <section className="relative z-10 mx-auto max-w-7xl px-5 pb-24 sm:px-8 sm:pb-32">
-        <div className="relative overflow-hidden rounded-[40px] border border-white/[0.1] bg-gradient-to-b from-[#11121A]/90 via-[#0B0C12]/90 to-[#08090D]/95 px-6 py-20 shadow-[0_-20px_80px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:px-12 sm:py-24">
-          {/* Decorative orbital rings inside Approach container */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-24 left-1/2 h-[640px] w-[1050px] -translate-x-1/2 rounded-full border border-white/[0.05]"
+          {/* HORIZONTAL DIVIDER */}
+          <motion.div
+            initial={reducedMotion ? false : { scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.28, ease: EASE }}
+            className="my-6 h-px w-full origin-left bg-white/25 sm:my-8 lg:my-10"
           />
 
-          {/* Floating Left Metric Node (+45% lead growth) */}
-          <div className="pointer-events-none absolute top-14 left-10 hidden items-center gap-2.5 lg:flex">
-            <span className="h-2.5 w-2.5 rounded-full bg-brand shadow-[0_0_10px_#b8f135]" />
-            <div>
-              <p className="font-display text-sm font-bold text-brand">+45%</p>
-              <p className="text-[11px] text-zinc-400">weekly lead growth</p>
-            </div>
-          </div>
+          {/* MIDDLE ROW: 4 Channel Feature Badges */}
+          <motion.div
+            initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.34, ease: EASE }}
+            className="grid grid-cols-2 gap-2.5 sm:gap-5 lg:grid-cols-4 lg:gap-6"
+          >
+            {CHANNEL_FEATURES.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/[0.07] p-2.5 text-white/95 backdrop-blur-sm sm:gap-3.5 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+              >
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/45 bg-white/[0.08] sm:h-11 sm:w-11">
+                  <Icon
+                    className="h-4 w-4 text-white sm:h-5 sm:w-5"
+                    strokeWidth={1.75}
+                  />
+                </span>
+                <span className="text-[12px] leading-tight font-medium tracking-[-0.01em] sm:text-[14.5px] lg:text-[15.5px]">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
 
-          {/* Floating Right Metric Node (6.4x ad returns) */}
-          <div className="pointer-events-none absolute right-12 bottom-12 hidden items-center gap-2.5 lg:flex">
-            <span className="h-2.5 w-2.5 rounded-full bg-brand shadow-[0_0_10px_#b8f135]" />
-            <div>
-              <p className="font-display text-sm font-bold text-brand">6.4×</p>
-              <p className="text-[11px] text-zinc-400">average ad returns</p>
-            </div>
-          </div>
+          {/* BOTTOM ROW: 3-Column Bento Dashboard Grid */}
+          <div className="mt-7 grid grid-cols-1 items-stretch gap-4 sm:mt-10 sm:gap-6 md:grid-cols-2 lg:grid-cols-12">
+            {/* COLUMN 1: Campaign Summary + Top-Rated Testimonial Card */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.42, ease: EASE }}
+              className="flex flex-col justify-between rounded-[22px] bg-white p-4 text-[#121826] shadow-[0_20px_50px_rgba(11,26,97,0.22)] sm:rounded-[26px] sm:p-6 md:col-span-1 lg:col-span-4"
+            >
+              <div>
+                <h2 className="text-[15px] font-bold tracking-[-0.02em] text-[#141A29] sm:text-[16px]">
+                  Campaign Summary
+                </h2>
 
-          {/* Section Heading */}
-          <Reveal>
-            <div className="mx-auto max-w-2xl text-center">
-              <p className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-[0.2em] text-[#9884D6] uppercase">
-                <span className="h-2 w-2 rounded-full bg-[#9884D6]" />
-                OUR APPROACH
-              </p>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-                We turn strategy into <Accent>scale</Accent>
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-zinc-300">
-                Most agencies stop at clicks and impressions. We engineer the
-                entire buyer journey—from the first ad impression to a qualified
-                prospect booked on your sales calendar.
-              </p>
-            </div>
-          </Reveal>
-
-          {/* 3 Approach Pillars */}
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {APPROACH_PILLARS.map((pillar, i) => {
-              const Icon = pillar.icon;
-              return (
-                <Reveal key={pillar.title} delay={0.1 * i}>
-                  <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.08] bg-[#12131C]/90 p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20">
-                    <div
-                      aria-hidden="true"
-                      className={cn(
-                        "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-60",
-                        pillar.accent
-                      )}
-                    />
-
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between">
-                        <span
-                          className={cn(
-                            "grid h-12 w-12 place-items-center rounded-2xl border",
-                            pillar.iconClass
-                          )}
-                        >
-                          <Icon className="h-5.5 w-5.5" />
-                        </span>
-                        <span className="font-mono text-xs font-bold text-zinc-500">
-                          STEP {pillar.step}
-                        </span>
-                      </div>
-
-                      <h3 className="mt-6 font-display text-xl font-bold text-white">
-                        {pillar.title}
-                      </h3>
-                      <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">
-                        {pillar.description}
-                      </p>
-                    </div>
-
-                    <div className="relative z-10 mt-6 flex items-center gap-2 border-t border-white/[0.07] pt-4">
-                      <CheckCircle2 className="h-4 w-4 text-brand" />
-                      <span className="text-xs font-semibold text-zinc-200">
-                        {pillar.metric}
+                <div className="mt-4 grid grid-cols-[1fr_1fr_auto] items-center gap-2 sm:mt-5 sm:gap-3">
+                  <div className="min-w-0">
+                    <span className="block truncate text-[11px] font-medium text-[#8C95A6] sm:text-[11.5px]">
+                      Ad Spend
+                    </span>
+                    <div className="mt-1.5 flex items-center gap-1.5 sm:mt-2 sm:gap-2">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#F2F4F8] text-[#141A29] sm:h-8 sm:w-8">
+                        <ArrowUp className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                      </span>
+                      <span className="truncate text-[13px] font-bold tracking-[-0.03em] text-[#141A29] sm:text-[15px]">
+                        $2,879.00
                       </span>
                     </div>
                   </div>
-                </Reveal>
-              );
-            })}
-          </div>
 
-          {/* Bottom Conversion Banner */}
-          <Reveal delay={0.2}>
-            <div className="mt-14 flex flex-col items-center justify-between gap-6 rounded-3xl border border-brand/25 bg-gradient-to-r from-brand/15 via-brand/5 to-transparent p-7 sm:p-9 lg:flex-row">
-              <div className="max-w-xl text-center lg:text-left">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-brand uppercase">
-                  <Zap className="h-3.5 w-3.5" /> Ready to flood your pipeline?
-                </span>
-                <h3 className="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
-                  Let&apos;s build your predictable lead machine in 7 days.
-                </h3>
-                <p className="mt-1.5 text-sm text-zinc-300">
-                  Get a free custom audit of your market, ad angles, and funnel
-                  opportunities.
+                  <div className="min-w-0">
+                    <span className="block truncate text-[11px] font-medium text-[#8C95A6] sm:text-[11.5px]">
+                      Pipeline Value
+                    </span>
+                    <div className="mt-1.5 flex items-center gap-1.5 sm:mt-2 sm:gap-2">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#2448E8] text-white shadow-sm sm:h-8 sm:w-8">
+                        <ArrowDown className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                      </span>
+                      <span className="truncate text-[13px] font-bold tracking-[-0.03em] text-[#141A29] sm:text-[15px]">
+                        $39,806.50
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <span className="block text-[11px] font-medium text-[#8C95A6] sm:text-[11.5px]">
+                      Add
+                    </span>
+                    <button
+                      type="button"
+                      aria-label="Add new lead channel"
+                      className="mt-1.5 grid h-7 w-7 place-items-center rounded-full bg-[#F2F4F8] text-[#2448E8] transition hover:bg-[#2448E8] hover:text-white sm:mt-2 sm:h-8 sm:w-8"
+                    >
+                      <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Inner Blue Notched Testimonial Card */}
+              <div className="relative mt-5 overflow-hidden rounded-[18px] bg-[#2448E8] px-4 pt-10 pb-5 text-white sm:mt-7 sm:rounded-[20px] sm:px-5 sm:pb-6">
+                <div className="absolute top-0 left-4 flex items-center gap-1.5 rounded-b-xl bg-white px-3 py-1.5 text-[10.5px] font-bold text-[#141A29] shadow-sm sm:left-5 sm:px-3.5 sm:text-[11px]">
+                  <Trophy className="h-3 w-3 text-[#2448E8] sm:h-3.5 sm:w-3.5" />
+                  <span>Top-Rated</span>
+                </div>
+
+                <div className="absolute top-2.5 right-3.5 flex flex-col items-end sm:top-3 sm:right-4">
+                  <div className="flex items-center gap-0.5 text-white">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-2.5 w-2.5 fill-white text-white sm:h-3 sm:w-3"
+                      />
+                    ))}
+                  </div>
+                  <span className="mt-0.5 text-[9.5px] font-semibold text-white/80 sm:text-[10px]">
+                    5.0
+                  </span>
+                </div>
+
+                <div className="mt-1 flex items-center gap-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80"
+                    alt="William L., SaaS Founder"
+                    loading="lazy"
+                    className="h-6 w-6 shrink-0 rounded-full border border-white/60 object-cover"
+                  />
+                  <span className="truncate text-[11px] font-semibold text-white/95 sm:text-[11.5px]">
+                    William L., SaaS Founder
+                  </span>
+                </div>
+
+                <p className="mt-2 text-[11.5px] leading-[1.5] text-white/90 sm:mt-2.5 sm:text-[12px] sm:leading-[1.55]">
+                  &ldquo;It&rsquo;s not just a marketing agency &ndash;
+                  it&rsquo;s like having a dedicated paid ads, social, and email
+                  lead engine in my pocket.&rdquo;
                 </p>
+
+                <div
+                  className="pointer-events-none absolute bottom-0 left-1/2 h-2 w-24 -translate-x-1/2 rounded-t-lg bg-white sm:h-2.5 sm:w-28"
+                  aria-hidden="true"
+                />
+              </div>
+            </motion.div>
+
+            {/* COLUMN 2: CTA Trigger + Active Lead Pipeline Card */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
+              className="flex flex-col justify-between gap-4 sm:gap-5 md:col-span-1 lg:col-span-3"
+            >
+              <a
+                href="/contact"
+                className="group flex items-center justify-between rounded-[20px] border border-white/20 bg-white/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-white/15 lg:justify-start lg:gap-4 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:pt-1 lg:backdrop-blur-none lg:hover:translate-x-1 lg:hover:bg-transparent"
+              >
+                <div className="flex items-center gap-3.5 lg:gap-4">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-white text-[#2448E8] shadow-[0_12px_28px_rgba(11,26,97,0.22)] transition group-hover:scale-105 sm:h-13 sm:w-13 sm:rounded-[16px]">
+                    <ArrowDownToLine className="h-5 w-5" />
+                  </span>
+                  <span className="font-display text-[19px] font-semibold tracking-[-0.025em] text-white sm:text-[22px] lg:text-[24px]">
+                    Get Free Audit
+                  </span>
+                </div>
+
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white lg:hidden">
+                  <ArrowUpRight className="h-4 w-4" />
+                </span>
+              </a>
+
+              <div className="flex flex-1 flex-col justify-between rounded-[22px] bg-white p-5 text-[#121826] shadow-[0_20px_50px_rgba(11,26,97,0.22)] sm:rounded-[26px] sm:p-6">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-[#2448E8] px-3.5 py-1.5 text-[11px] font-semibold text-white shadow-sm sm:px-4 sm:py-2 sm:text-[11.5px]">
+                    <span className="grid h-4 w-4 place-items-center rounded-full bg-white/20">
+                      <Sparkles className="h-2.5 w-2.5" />
+                    </span>
+                    <span>Leads in Click Funnel</span>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between sm:mt-5">
+                    <span className="text-[11.5px] font-medium text-[#8C95A6] sm:text-[12px]">
+                      Total Qualified Pipeline
+                    </span>
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-[#EEF2FF] text-[#2448E8] sm:h-9 sm:w-9">
+                      <FolderKanban className="h-4 w-4" />
+                    </span>
+                  </div>
+
+                  <div className="mt-1 font-display text-[26px] leading-tight font-bold tracking-[-0.04em] text-[#141A29] sm:text-[32px]">
+                    $84,200.00
+                  </div>
+
+                  <div className="mt-3.5 h-1.5 w-full overflow-hidden rounded-full bg-[#ECEFF5] sm:mt-4">
+                    <div className="h-full w-[66%] rounded-full bg-[#2448E8]" />
+                  </div>
+                </div>
+
+                <div className="mt-5 flex items-end justify-between gap-2 pt-1">
+                  <div>
+                    <span className="inline-block rounded-md bg-[#DCFCE7] px-2 py-0.5 text-[10px] font-bold text-[#15803D]">
+                      +24.6%
+                    </span>
+                    <p className="mt-1.5 text-[10px] font-medium text-[#8C95A6]">
+                      Qualified leads last 30 days
+                    </p>
+                  </div>
+
+                  <div className="space-y-1 text-right text-[10px] font-medium text-[#64748B]">
+                    <div className="flex items-center justify-end gap-1.5">
+                      <span className="h-2 w-2 shrink-0 rounded-[2px] bg-[#2448E8]" />
+                      <span>Paid &amp; Social</span>
+                    </div>
+                    <div className="flex items-center justify-end gap-1.5">
+                      <span className="h-2 w-2 shrink-0 rounded-[2px] bg-[#CBD5E1]" />
+                      <span>Email Flows</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* COLUMN 3: Trust Bar + Multi-Channel Lead Analysis Chart */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.58, ease: EASE }}
+              className="flex flex-col justify-between gap-4 md:col-span-2 lg:col-span-5"
+            >
+              <div className="relative flex items-center justify-between gap-3 rounded-[20px] bg-white px-4 py-3.5 text-[#141A29] shadow-[0_16px_40px_rgba(11,26,97,0.18)] sm:rounded-[22px] sm:px-6 sm:py-4">
+                <p className="text-[13px] leading-snug font-medium text-[#475569] sm:text-[15px]">
+                  Trusted by{" "}
+                  <strong className="font-bold text-[#141A29]">
+                    50,000+ leads
+                  </strong>{" "}
+                  generated worldwide
+                </p>
+                <a
+                  href="#case-studies"
+                  aria-label="View lead generation case studies"
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#F2F5FA] text-[#2448E8] transition hover:bg-[#2448E8] hover:text-white sm:h-9 sm:w-9"
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
               </div>
 
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-bold text-black shadow-[0_10px_30px_rgba(184,241,53,0.3)] transition-all hover:-translate-y-0.5 hover:bg-[#c8f856]"
-                >
-                  <span>Get More Leads</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/[0.1]"
-                >
-                  <PhoneCall className="h-4 w-4 text-brand" />
-                  <span>Book a Free Strategy Call</span>
-                </Link>
+              <div className="flex flex-1 flex-col justify-between rounded-[22px] bg-white p-4 text-[#141A29] shadow-[0_20px_50px_rgba(11,26,97,0.22)] sm:rounded-[26px] sm:p-6">
+                <div className="flex items-center justify-between gap-2">
+                  <h2 className="text-[15.5px] font-bold tracking-[-0.02em] text-[#141A29] sm:text-[17px]">
+                    Lead Analysis
+                  </h2>
+                  <span className="rounded-lg bg-[#9AE6B4] px-2.5 py-1 text-[10px] font-bold text-[#14532D] sm:px-3 sm:py-1.5 sm:text-[10.5px]">
+                    Active Campaigns
+                  </span>
+                </div>
+
+                <div className="relative mt-4 h-[155px] w-full sm:mt-5 sm:h-[185px]">
+                  <svg
+                    viewBox="0 0 460 180"
+                    preserveAspectRatio="none"
+                    className="h-full w-full overflow-hidden"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="leadWaveFill"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="0%"
+                          stopColor="#4F70F5"
+                          stopOpacity="0.35"
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="#4F70F5"
+                          stopOpacity="0.06"
+                        />
+                      </linearGradient>
+                    </defs>
+
+                    {[
+                      { label: "100", y: 20 },
+                      { label: "80", y: 50 },
+                      { label: "60", y: 80 },
+                      { label: "40", y: 110 },
+                      { label: "20", y: 140 },
+                      { label: "0", y: 170 },
+                    ].map((row) => (
+                      <g key={row.label}>
+                        <text
+                          x="2"
+                          y={row.y + 4}
+                          fill="#94A3B8"
+                          fontSize="11"
+                          fontWeight="500"
+                        >
+                          {row.label}
+                        </text>
+                        <line
+                          x1="32"
+                          y1={row.y}
+                          x2="452"
+                          y2={row.y}
+                          stroke="#E2E8F0"
+                          strokeWidth="1"
+                          strokeDasharray={row.label === "0" ? undefined : "3 3"}
+                        />
+                      </g>
+                    ))}
+
+                    <path
+                      d="M 42 170 L 42 115 C 62 115, 72 162, 95 162 C 118 162, 128 80, 152 80 C 176 80, 192 165, 222 165 C 252 165, 265 28, 290 28 C 315 28, 326 155, 350 155 C 374 155, 382 28, 404 28 C 422 28, 428 118, 436 118 C 444 118, 446 50, 450 50 L 450 170 Z"
+                      fill="url(#leadWaveFill)"
+                    />
+
+                    <path
+                      d="M 42 115 C 62 115, 72 162, 95 162 C 118 162, 128 80, 152 80 C 176 80, 192 165, 222 165 C 252 165, 265 28, 290 28 C 315 28, 326 155, 350 155 C 374 155, 382 28, 404 28 C 422 28, 428 118, 436 118 C 444 118, 446 50, 450 50"
+                      fill="none"
+                      stroke="#2448E8"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+
+                    <line
+                      x1="42"
+                      y1="115"
+                      x2="42"
+                      y2="170"
+                      stroke="#2448E8"
+                      strokeWidth="1.2"
+                      strokeOpacity="0.5"
+                    />
+                    <line
+                      x1="450"
+                      y1="50"
+                      x2="450"
+                      y2="170"
+                      stroke="#2448E8"
+                      strokeWidth="1.2"
+                      strokeOpacity="0.5"
+                    />
+
+                    <circle
+                      cx="152"
+                      cy="80"
+                      r="5"
+                      fill="#2448E8"
+                      fillOpacity="0.2"
+                    />
+                    <circle cx="152" cy="80" r="2.5" fill="#2448E8" />
+
+                    <g transform="translate(112, 32)">
+                      <rect
+                        x="0"
+                        y="0"
+                        width="80"
+                        height="32"
+                        rx="10"
+                        fill="#2448E8"
+                      />
+                      <polygon
+                        points="35,32 45,32 40,39"
+                        fill="#2448E8"
+                      />
+                      <text
+                        x="40"
+                        y="20"
+                        textAnchor="middle"
+                        fill="white"
+                        fontSize="11.5"
+                        fontWeight="700"
+                      >
+                        +42.8%
+                      </text>
+                    </g>
+
+                    <circle
+                      cx="290"
+                      cy="28"
+                      r="6"
+                      fill="#2448E8"
+                      fillOpacity="0.2"
+                    />
+                    <circle cx="290" cy="28" r="2.5" fill="#2448E8" />
+                  </svg>
+                </div>
               </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-    </main>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Bottom Center Stepped Silhouette Tab */}
+        <div className="mx-auto hidden h-7 w-[54%] rounded-b-[28px] border-x border-b border-white/15 bg-[#1D3FD6] shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:block" />
+      </div>
+    </section>
   );
 }

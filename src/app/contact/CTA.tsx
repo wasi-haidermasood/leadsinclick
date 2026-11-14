@@ -1,41 +1,57 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import React, { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowRight,
-  Check,
+  ArrowUpRight,
   CheckCircle2,
   ChevronDown,
+  ChevronRight,
   Clock,
+  Home,
   Loader2,
   Mail,
-  Phone,
-  ShieldCheck,
+  MapPin,
+  Smartphone,
 } from "lucide-react";
+import Beams from "@/components/ui/Beams";
 
-import { Accent, EASE, Reveal } from "@/components/ui";
-import { cn } from "@/utils/cn";
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 // ✅ Formspree endpoint — form submissions go to your email
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzeeprrd";
 
-const AUDIT_INCLUDES = [
-  "Website & funnel performance review",
-  "Google ranking & competitor analysis",
-  "Ad account audit (if you're running ads)",
-  "90-day lead generation roadmap",
-];
+/* -------------------------------------------------------------------------- */
+/*  8-Spoke #b4f03c Asterisk Icon (Matches Reference Pill Badges)             */
+/* -------------------------------------------------------------------------- */
+function LimeAsteriskIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 3V21M3 12H21M5.63604 5.63604L18.364 18.364M18.364 5.63604L5.63604 18.364"
+        stroke="#b4f03c"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 const inputClasses =
-  "w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[15px] text-white placeholder:text-zinc-500 transition-all duration-300 focus:border-brand/60 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-brand/25";
+  "w-full rounded-[10px] border border-[#D8EAB5] bg-[#EEF7DC] px-4 py-3.5 text-[14px] text-[#222222] placeholder:text-[#6E775F] transition-all duration-200 focus:border-[#b4f03c] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b4f03c]/35";
 
 export default function CTA() {
   const [form, setForm] = useState({
     name: "",
+    email: "",
     phone: "",
-    business: "",
-    budget: "",
+    service: "",
     message: "",
   });
 
@@ -56,13 +72,25 @@ export default function CTA() {
     // ---- Client-side validation ----
     const next: Record<string, string> = {};
 
-    if (form.name.trim().length < 2) next.name = "Please enter your name.";
+    if (form.name.trim().length < 2) {
+      next.name = "Please enter your name.";
+    }
+
+    if (
+      form.email.trim() &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+    ) {
+      next.email = "Please enter a valid email address.";
+    }
 
     const digits = form.phone.replace(/\D/g, "");
-    if (digits.length < 10)
+    if (digits.length < 10) {
       next.phone = "Enter a valid phone / WhatsApp number.";
+    }
 
-    if (!form.business) next.business = "Please select your business type.";
+    if (!form.service) {
+      next.service = "Please select a service you're interested in.";
+    }
 
     setErrors(next);
     if (Object.keys(next).length > 0) return;
@@ -80,12 +108,11 @@ export default function CTA() {
         },
         body: JSON.stringify({
           name: form.name,
+          email: form.email || "Not provided",
           phone: form.phone,
-          business: form.business,
-          budget: form.budget || "Not specified",
+          service: form.service,
           message: form.message || "No additional message",
-          // Nice subject line in your email inbox
-          _subject: `🚀 New Free Audit Request from ${form.name}`,
+          _subject: `🚀 New Contact / Audit Request from ${form.name}`,
         }),
       });
 
@@ -110,394 +137,484 @@ export default function CTA() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-20 py-24 sm:py-32"
       aria-labelledby="cta-title"
+      className="relative min-h-screen w-full overflow-hidden bg-[#0B0B0B] text-white"
     >
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[32px] border border-white/[0.08] bg-panel">
-            {/* Backdrop flourishes */}
-            <div
-              className="dot-grid absolute inset-0 opacity-50"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute -top-40 -left-24 h-96 w-96 rounded-full opacity-[0.14] blur-[100px]"
-              style={{
-                background:
-                  "radial-gradient(closest-side, #b8f135, transparent)",
-              }}
-              aria-hidden="true"
-            />
-            <div
-              className="absolute -right-24 -bottom-40 h-96 w-96 rounded-full opacity-[0.09] blur-[100px]"
-              style={{
-                background:
-                  "radial-gradient(closest-side, #2dd4bf, transparent)",
-              }}
-              aria-hidden="true"
-            />
+      {/* Animated Beams WebGL Background */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <Beams
+          color="#605f5fff"
+          beamWidth={140}
+          rotation={30}
+          speed={1}
+          glow={0.6}
+          waveLength={233}
+          depth={1}
+          sharpness={0.6}
+          twist={0}
+          fillLight={0.3}
+          brightness={1.6}
+          grain={0.35}
+          variation={0}
+          mouseInteraction
+          mouseStrength={1}
+          fade={0}
+          opacity={1}
+          intro
+          lightMode={false}
+        />
+      </div>
 
-            <div className="relative grid lg:grid-cols-[1fr_1.05fr]">
-              {/* Copy side */}
-              <div className="p-8 sm:p-12 lg:p-14">
-                <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-brand uppercase">
-                  <Clock className="h-3.5 w-3.5" /> Limited free audits — 7
-                  spots left this month
-                </span>
+      {/* Foreground Content */}
+      <div className="relative z-10">
+        {/* Top Header */}
+        <div className="pt-28 pb-12 sm:pt-36 sm:pb-16 text-center">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <motion.h1
+              id="cta-title"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, ease: EASE }}
+              className="text-4xl font-bold tracking-tight text-white sm:text-6xl"
+            >
+              Contact Us
+            </motion.h1>
 
-                <h2
-                  id="cta-title"
-                  className="mt-6 font-display text-4xl leading-[1.08] font-semibold tracking-tight text-balance text-white sm:text-5xl"
-                >
-                  Ready to flood your business with <Accent>leads?</Accent>
-                </h2>
+            {/* Breadcrumb Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: 0.08, ease: EASE }}
+              className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 shadow-sm backdrop-blur-md"
+            >
+              <Home className="h-3.5 w-3.5 text-[#b4f03c]" />
+              <Link
+                href="/"
+                className="transition-colors hover:text-[#b4f03c]"
+              >
+                Home
+              </Link>
+              <ChevronRight className="h-3.5 w-3.5 text-white/50" />
+              <span className="font-semibold text-white">Contact Us</span>
+            </motion.div>
+          </div>
+        </div>
 
-                <p className="mt-5 max-w-md leading-relaxed text-pretty text-zinc-400">
-                  Claim your free growth audit (worth $499). We&apos;ll show you
-                  exactly where you&apos;re losing customers — and the fastest
-                  way to win them back.
-                </p>
+        {/* Main Content Container */}
+        <div className="mx-auto max-w-[1140px] px-4 pb-20 sm:px-6 sm:pb-28">
+          {/* 2-Column Grid: Left Contact Info Card + Right Form Card */}
+          <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-12 lg:gap-8">
+            {/* LEFT COLUMN: Contact Information Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="rounded-[22px] border border-white/15 bg-white p-6 text-[#222222] shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:p-8 lg:col-span-5"
+            >
+              <h2 className="text-xl font-bold tracking-tight text-[#222222] sm:text-[22px]">
+                Contact Information
+              </h2>
 
-                <ul className="mt-8 space-y-3">
-                  {AUDIT_INCLUDES.map((point) => (
-                    <li
-                      key={point}
-                      className="flex items-start gap-3 text-[15px] text-zinc-200"
+              <p className="mt-3 text-[13px] leading-relaxed text-[#6E6E6E]">
+                Have questions or need help with your digital project? Our team
+                is always ready to assist you with professional solutions and
+                reliable support. Feel free to contact us anytime and we will
+                respond as quickly as possible.
+              </p>
+
+              {/* Contact Details List */}
+              <div className="mt-6 divide-y divide-[#EFEFEF]">
+                {/* 1. Phone Number */}
+                <div className="flex items-start gap-4 py-4 first:pt-2">
+                  <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#b4f03c]/25 text-[#1F2910]">
+                    <Smartphone className="h-5 w-5 stroke-[1.9]" />
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-[#222222]">
+                      Phone Number
+                    </h3>
+                    <a
+                      href="tel:+19175551234"
+                      className="mt-0.5 block text-[13px] text-[#6E6E6E] transition-colors hover:text-[#659600]"
                     >
-                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-black">
-                        <Check className="h-3 w-3" strokeWidth={3.5} />
-                      </span>
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+                      +1 (917) 555-1234
+                    </a>
+                  </div>
+                </div>
 
-                <div className="mt-10 space-y-3 border-t border-white/[0.08] pt-8">
-                  <a
-                    href="tel:+19175551234"
-                    className="flex items-center gap-3 text-[15px] text-zinc-300 transition-colors hover:text-brand"
-                  >
-                    <Phone className="h-4.5 w-4.5 text-brand" /> +1 (917)
-                    555-1234 (Mon–Fri, 9am–6pm)
-                  </a>
-                  <a
-                    href="mailto:hello@leadsinclick.com"
-                    className="flex items-center gap-3 text-[15px] text-zinc-300 transition-colors hover:text-brand"
-                  >
-                    <Mail className="h-4.5 w-4.5 text-brand" />{" "}
-                    hello@leadsinclick.com
-                  </a>
-                  <p className="flex items-center gap-3 text-[13px] text-zinc-500">
-                    <ShieldCheck className="h-4.5 w-4.5 shrink-0 text-brand" />
-                    Your details stay private. No spam, no sharing — ever.
-                  </p>
+                {/* 2. Email Address */}
+                <div className="flex items-start gap-4 py-4">
+                  <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#b4f03c]/25 text-[#1F2910]">
+                    <Mail className="h-5 w-5 stroke-[1.9]" />
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-[#222222]">
+                      Email Address
+                    </h3>
+                    <a
+                      href="mailto:hello@leadsinclick.com"
+                      className="mt-0.5 block text-[13px] text-[#6E6E6E] transition-colors hover:text-[#659600]"
+                    >
+                      hello@leadsinclick.com
+                    </a>
+                  </div>
+                </div>
+
+                {/* 3. Opening Hour */}
+                <div className="flex items-start gap-4 py-4">
+                  <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#b4f03c]/25 text-[#1F2910]">
+                    <Clock className="h-5 w-5 stroke-[1.9]" />
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-[#222222]">
+                      Opening Hour
+                    </h3>
+                    <p className="mt-0.5 text-[13px] text-[#6E6E6E]">
+                      Mon – Fri: 9:00 AM – 6:00 PM
+                    </p>
+                  </div>
+                </div>
+
+                {/* 4. Our Location */}
+                <div className="flex items-start gap-4 pt-4 pb-1">
+                  <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#b4f03c]/25 text-[#1F2910]">
+                    <MapPin className="h-5 w-5 stroke-[1.9]" />
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-[#222222]">
+                      Our Location
+                    </h3>
+                    <p className="mt-0.5 text-[13px] text-[#6E6E6E]">
+                      123 Business Street, New York
+                    </p>
+                  </div>
                 </div>
               </div>
+            </motion.div>
 
-              {/* Form side */}
-              <div className="relative border-t border-white/[0.08] bg-black/25 p-8 backdrop-blur-sm sm:p-12 lg:border-t-0 lg:border-l lg:p-14">
-                <AnimatePresence mode="wait">
-                  {status === "done" ? (
-                    <motion.div
-                      key="done"
-                      initial={{ opacity: 0, scale: 0.96 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.55, ease: EASE }}
-                      className="flex h-full min-h-[420px] flex-col items-center justify-center text-center"
-                      role="status"
+            {/* RIGHT COLUMN: Get In Touch Form Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
+              className="rounded-[24px] border border-white/15 bg-[#F7FBEF] p-6 text-[#222222] shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:p-10 lg:col-span-7"
+            >
+              <AnimatePresence mode="wait">
+                {status === "done" ? (
+                  <motion.div
+                    key="done"
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    className="flex min-h-[420px] flex-col items-center justify-center text-center"
+                    role="status"
+                  >
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        delay: 0.12,
+                        type: "spring",
+                        stiffness: 220,
+                        damping: 15,
+                      }}
+                      className="grid h-20 w-20 place-items-center rounded-full bg-[#b4f03c] text-[#161616] shadow-[0_12px_35px_rgba(180,240,60,0.45)]"
                     >
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{
-                          delay: 0.15,
-                          type: "spring",
-                          stiffness: 220,
-                          damping: 15,
-                        }}
-                        className="grid h-20 w-20 place-items-center rounded-full bg-brand text-black shadow-[0_0_60px_rgba(184,241,53,0.45)]"
-                      >
-                        <CheckCircle2 className="h-10 w-10" />
-                      </motion.span>
+                      <CheckCircle2 className="h-10 w-10" />
+                    </motion.span>
 
-                      <h3 className="mt-7 font-display text-3xl font-semibold tracking-tight text-white">
-                        You&apos;re in, {form.name.split(" ")[0] || "there"}!
-                      </h3>
+                    <h3 className="mt-6 text-2xl font-bold tracking-tight text-[#222222] sm:text-3xl">
+                      Thank you, {form.name.split(" ")[0] || "there"}!
+                    </h3>
 
-                      <p className="mt-3 max-w-sm leading-relaxed text-zinc-400">
-                        Your free audit request is confirmed. A growth
-                        strategist will call you on{" "}
-                        <strong className="font-semibold text-white">
-                          {form.phone}
-                        </strong>{" "}
-                        within 24 working hours.
-                      </p>
+                    <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#666666]">
+                      Your message has been received. A growth strategist from{" "}
+                      <strong className="font-semibold text-[#222222]">
+                        Leads in Click
+                      </strong>{" "}
+                      will reach out to you on{" "}
+                      <strong className="font-semibold text-[#222222]">
+                        {form.phone}
+                      </strong>{" "}
+                      within 24 working hours.
+                    </p>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setStatus("idle");
-                          setForm({
-                            name: "",
-                            phone: "",
-                            business: "",
-                            budget: "",
-                            message: "",
-                          });
-                          setErrors({});
-                          setServerError("");
-                        }}
-                        className="mt-7 text-sm font-semibold text-brand underline-offset-4 hover:underline"
-                      >
-                        Submit another request
-                      </button>
-                    </motion.div>
-                  ) : (
-                    <motion.form
-                      key="form"
-                      onSubmit={handleSubmit}
-                      noValidate
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0, y: -14 }}
-                      transition={{ duration: 0.45, ease: EASE }}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStatus("idle");
+                        setForm({
+                          name: "",
+                          email: "",
+                          phone: "",
+                          service: "",
+                          message: "",
+                        });
+                        setErrors({});
+                        setServerError("");
+                      }}
+                      className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#b4f03c] px-6 py-2.5 text-xs font-semibold text-[#161616] shadow-sm transition hover:bg-[#a3df2b]"
                     >
-                      <h3 className="font-display text-2xl font-semibold tracking-tight text-white">
-                        Get your free audit
-                      </h3>
-                      <p className="mt-1.5 text-sm text-zinc-500">
-                        Fill this in — we&apos;ll handle the rest.
-                      </p>
+                      Send another message
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    onSubmit={handleSubmit}
+                    noValidate
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.4, ease: EASE }}
+                  >
+                    {/* Top Pill Badge */}
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 shadow-xs">
+                      <LimeAsteriskIcon className="h-3.5 w-3.5" />
+                      <span className="text-xs font-semibold text-[#333333]">
+                        Get In Touch
+                      </span>
+                    </div>
 
-                      <div className="mt-7 space-y-4">
-                        {/* Name */}
+                    {/* Form Heading */}
+                    <h2 className="mt-4 text-2xl font-bold tracking-tight text-[#222222] sm:text-[34px] sm:leading-tight">
+                      Get In Touch
+                    </h2>
+
+                    <p className="mt-2.5 text-[13px] leading-relaxed text-[#6E6E6E]">
+                      We would love to hear about your project and help you grow
+                      your business online. Fill out the contact form and our
+                      team will get back to you soon with the best possible
+                      solution for your needs.
+                    </p>
+
+                    {/* Form Inputs Grid */}
+                    <div className="mt-6 space-y-4">
+                      {/* Row 1: Name + Email Address */}
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div>
-                          <label
-                            htmlFor="name"
-                            className="mb-1.5 block text-sm font-medium text-zinc-300"
-                          >
-                            Your name <span className="text-brand">*</span>
-                          </label>
                           <input
                             id="name"
                             name="name"
                             type="text"
                             autoComplete="name"
-                            placeholder="e.g. Alex Johnson"
+                            placeholder="Name"
                             value={form.name}
                             onChange={(e) => update("name", e.target.value)}
                             aria-invalid={!!errors.name}
-                            aria-describedby={
-                              errors.name ? "name-error" : undefined
-                            }
-                            className={cn(
-                              inputClasses,
-                              errors.name && "border-red-400/60"
-                            )}
+                            className={`${inputClasses} ${
+                              errors.name ? "border-red-400" : ""
+                            }`}
                           />
                           {errors.name && (
-                            <p
-                              id="name-error"
-                              className="mt-1.5 text-[13px] text-red-300"
-                            >
+                            <p className="mt-1 text-xs text-red-500">
                               {errors.name}
                             </p>
                           )}
                         </div>
 
-                        {/* Phone */}
                         <div>
-                          <label
-                            htmlFor="phone"
-                            className="mb-1.5 block text-sm font-medium text-zinc-300"
-                          >
-                            Phone / WhatsApp number{" "}
-                            <span className="text-brand">*</span>
-                          </label>
+                          <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            placeholder="Email Address"
+                            value={form.email}
+                            onChange={(e) => update("email", e.target.value)}
+                            aria-invalid={!!errors.email}
+                            className={`${inputClasses} ${
+                              errors.email ? "border-red-400" : ""
+                            }`}
+                          />
+                          {errors.email && (
+                            <p className="mt-1 text-xs text-red-500">
+                              {errors.email}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Row 2: Phone Number + Service You're Interested */}
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
                           <input
                             id="phone"
                             name="phone"
                             type="tel"
                             autoComplete="tel"
                             inputMode="tel"
-                            placeholder="+1 917 555 1234"
+                            placeholder="Phone Number"
                             value={form.phone}
                             onChange={(e) => update("phone", e.target.value)}
                             aria-invalid={!!errors.phone}
-                            aria-describedby={
-                              errors.phone ? "phone-error" : undefined
-                            }
-                            className={cn(
-                              inputClasses,
-                              errors.phone && "border-red-400/60"
-                            )}
+                            className={`${inputClasses} ${
+                              errors.phone ? "border-red-400" : ""
+                            }`}
                           />
                           {errors.phone && (
-                            <p
-                              id="phone-error"
-                              className="mt-1.5 text-[13px] text-red-300"
-                            >
+                            <p className="mt-1 text-xs text-red-500">
                               {errors.phone}
                             </p>
                           )}
                         </div>
 
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          {/* Business */}
-                          <div>
-                            <label
-                              htmlFor="business"
-                              className="mb-1.5 block text-sm font-medium text-zinc-300"
-                            >
-                              Business type{" "}
-                              <span className="text-brand">*</span>
-                            </label>
-                            <div className="relative">
-                              <select
-                                id="business"
-                                name="business"
-                                value={form.business}
-                                onChange={(e) =>
-                                  update("business", e.target.value)
-                                }
-                                aria-invalid={!!errors.business}
-                                className={cn(
-                                  inputClasses,
-                                  "appearance-none pr-10 [&>option]:bg-panel",
-                                  !form.business && "text-zinc-500",
-                                  errors.business && "border-red-400/60"
-                                )}
-                              >
-                                <option value="" disabled>
-                                  Select type
-                                </option>
-                                <option>Clinic / Healthcare</option>
-                                <option>Real Estate</option>
-                                <option>Education / Coaching</option>
-                                <option>Salon / Gym / Wellness</option>
-                                <option>Restaurant / Café</option>
-                                <option>E-commerce / D2C Brand</option>
-                                <option>Professional Services</option>
-                                <option>Other</option>
-                              </select>
-                              <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4.5 w-4.5 -translate-y-1/2 text-zinc-500" />
-                            </div>
-                            {errors.business && (
-                              <p className="mt-1.5 text-[13px] text-red-300">
-                                {errors.business}
-                              </p>
-                            )}
-                          </div>
-
-                          {/* Budget */}
-                          <div>
-                            <label
-                              htmlFor="budget"
-                              className="mb-1.5 block text-sm font-medium text-zinc-300"
-                            >
-                              Monthly budget
-                            </label>
-                            <div className="relative">
-                              <select
-                                id="budget"
-                                name="budget"
-                                value={form.budget}
-                                onChange={(e) =>
-                                  update("budget", e.target.value)
-                                }
-                                className={cn(
-                                  inputClasses,
-                                  "appearance-none pr-10 [&>option]:bg-panel",
-                                  !form.budget && "text-zinc-500"
-                                )}
-                              >
-                                <option value="" disabled>
-                                  Select range
-                                </option>
-                                <option>Under $1,000</option>
-                                <option>$1,000 – $3,000</option>
-                                <option>$3,000 – $10,000</option>
-                                <option>$10,000+</option>
-                                <option>Not sure yet</option>
-                              </select>
-                              <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4.5 w-4.5 -translate-y-1/2 text-zinc-500" />
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Message */}
                         <div>
-                          <label
-                            htmlFor="message"
-                            className="mb-1.5 block text-sm font-medium text-zinc-300"
-                          >
-                            What&apos;s your biggest growth challenge?{" "}
-                            <span className="font-normal text-zinc-500">
-                              (optional)
-                            </span>
-                          </label>
-                          <textarea
-                            id="message"
-                            name="message"
-                            rows={3}
-                            placeholder="e.g. We get visitors but not enough enquiries…"
-                            value={form.message}
-                            onChange={(e) => update("message", e.target.value)}
-                            className={cn(inputClasses, "resize-none")}
-                          />
+                          <div className="relative">
+                            <select
+                              id="service"
+                              name="service"
+                              value={form.service}
+                              onChange={(e) =>
+                                update("service", e.target.value)
+                              }
+                              aria-invalid={!!errors.service}
+                              className={`${inputClasses} appearance-none pr-10 ${
+                                !form.service
+                                  ? "text-[#6E775F]"
+                                  : "text-[#222222]"
+                              } ${errors.service ? "border-red-400" : ""}`}
+                            >
+                              <option value="" disabled>
+                                Service You&apos;re Interested
+                              </option>
+                              <option value="Lead Generation">
+                                Lead Generation
+                              </option>
+                              <option value="Website Development">
+                                Website Development
+                              </option>
+                              <option value="Facebook & Instagram Ads">
+                                Facebook &amp; Instagram Ads
+                              </option>
+                              <option value="Google Ads">
+                                Google Ads (PPC)
+                              </option>
+                              <option value="Google My Business (GMB)">
+                                Google My Business (GMB Ranking)
+                              </option>
+                              <option value="Social Media Management">
+                                Social Media Management
+                              </option>
+                              <option value="Full Growth Audit">
+                                Complete Digital Growth Audit
+                              </option>
+                            </select>
+                            <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-[#6E775F]" />
+                          </div>
+                          {errors.service && (
+                            <p className="mt-1 text-xs text-red-500">
+                              {errors.service}
+                            </p>
+                          )}
                         </div>
+                      </div>
 
-                        {/* 🐝 Honeypot field — bots fill this, humans don't see it */}
-                        <input
-                          type="text"
-                          name="_gotcha"
-                          tabIndex={-1}
-                          autoComplete="off"
-                          className="hidden"
-                          aria-hidden="true"
+                      {/* Row 3: Message Textarea */}
+                      <div>
+                        <textarea
+                          id="message"
+                          name="message"
+                          rows={5}
+                          placeholder="Message"
+                          value={form.message}
+                          onChange={(e) => update("message", e.target.value)}
+                          className={`${inputClasses} resize-y`}
                         />
                       </div>
 
-                      {/* Server error */}
-                      {status === "error" && serverError && (
-                        <div
-                          className="mt-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200"
-                          role="alert"
-                        >
-                          {serverError}
-                        </div>
-                      )}
+                      {/* Honeypot field for spam protection */}
+                      <input
+                        type="text"
+                        name="_gotcha"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        className="hidden"
+                        aria-hidden="true"
+                      />
+                    </div>
 
+                    {/* Server Error Alert */}
+                    {status === "error" && serverError && (
+                      <div
+                        className="mt-4 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-xs text-red-600"
+                        role="alert"
+                      >
+                        {serverError}
+                      </div>
+                    )}
+
+                    {/* Submit Pill Button (#b4f03c) with White Circular Arrow Badge */}
+                    <div className="mt-6">
                       <button
                         type="submit"
                         disabled={status === "loading"}
-                        className="group mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-base font-semibold text-black transition-all duration-300 hover:shadow-[0_12px_42px_rgba(184,241,53,0.45)] active:scale-[0.98] disabled:cursor-wait disabled:opacity-80"
+                        className="group inline-flex items-center gap-3 rounded-full bg-[#b4f03c] py-2 pr-2 pl-5 text-xs font-semibold text-[#161616] shadow-[0_8px_25px_rgba(180,240,60,0.4)] transition-all duration-300 hover:bg-[#a3df2b] active:scale-[0.98] disabled:cursor-wait disabled:opacity-75 sm:text-[13px]"
                       >
                         {status === "loading" ? (
                           <>
-                            <Loader2 className="h-5 w-5 animate-spin" />
-                            Reserving your spot…
+                            <span>Sending...</span>
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#161616]">
+                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            </span>
                           </>
                         ) : (
                           <>
-                            Claim My Free Audit
-                            <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                            <span>Send Message</span>
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#161616] transition-transform duration-300 group-hover:rotate-45">
+                              <ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
+                            </span>
                           </>
                         )}
                       </button>
-
-                      <p className="mt-3.5 text-center text-xs text-zinc-500">
-                        Free 30-minute strategy call included · No obligation to
-                        buy
-                      </p>
-                    </motion.form>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+                    </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
-        </Reveal>
+
+          {/* BOTTOM SECTION: Our Location + Map */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.65, ease: EASE }}
+            className="mt-20 text-center sm:mt-24"
+          >
+            {/* Our Location Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 backdrop-blur-md">
+              <LimeAsteriskIcon className="h-3.5 w-3.5" />
+              <span className="text-xs font-semibold text-white">
+                Our Location
+              </span>
+            </div>
+
+            {/* Heading */}
+            <h2 className="mx-auto mt-4 max-w-2xl text-2xl font-bold tracking-tight text-white sm:text-[34px] sm:leading-[1.2]">
+              Visit Our Office For In-person Meetings And Consultations
+            </h2>
+
+            {/* Rounded Google Maps Embed */}
+            <div className="mt-8 overflow-hidden rounded-[22px] border border-white/15 bg-zinc-900 shadow-[0_20px_60px_rgba(0,0,0,0.45)] sm:mt-10">
+              <iframe
+                title="Leads in Click Office Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.119763973046!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sus!4v1709000000000!5m2!1sen!2sus"
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-[300px] w-full sm:h-[400px]"
+              />
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

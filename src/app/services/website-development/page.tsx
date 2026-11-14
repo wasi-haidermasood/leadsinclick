@@ -1,36 +1,38 @@
 import type { Metadata } from "next";
-import WebsiteDev from "./WebHero";
-import TechStackMarquee from "./TechStackMarquee";
-import WebsiteServicesCards from "./WebisteServicesCards";
+import Beams from "@/components/ui/Beams";
+import WebDevHero from "./WebDevHero";
+import WebDevTrustSection from "./WebDevTrustSection";
+import WebDevProcessSection from "./WebDevProcessSection";
+import WebDevClosingSection from "./WebDevClosingSection";
 
-// ✅ METADATA — only works in Server Components
+// ✅ METADATA — Server Component
 export const metadata: Metadata = {
-  title: "Website Development — High-Performance Digital Experiences",
+  title: "Web Development — High-Converting Websites & Custom Web Apps",
   description:
-    "World-class website development for brands that demand speed, conversion, and unforgettable design. Custom builds, headless CMS, SEO-ready architecture, and ongoing optimization.",
+    "We design and engineer blazing-fast Next.js websites, custom web applications, and conversion-optimized landing pages that turn visitors into customers.",
   alternates: {
-    canonical: "/website-development",
+    canonical: "/web-development",
   },
   openGraph: {
-    title: "Website Development — Leads In Click",
+    title: "Web Development Services — Leads In Click",
     description:
-      "Premium, conversion-focused websites engineered for growth. From strategy to launch, we build digital experiences that perform.",
-    url: "/website-development",
+      "Digital experiences that convert. Custom UI/UX design, Next.js & React development, headless e-commerce, and 99+ Core Web Vitals performance.",
+    url: "/web-development",
     images: [
       {
-        url: "/og-website-dev.png",
+        url: "/og-web-development.png",
         width: 1200,
         height: 630,
-        alt: "Website Development by Leads In Click",
+        alt: "Web Development Services by Leads In Click",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Development — Leads In Click",
+    title: "Web Development Services — Leads In Click",
     description:
-      "Premium, conversion-focused websites engineered for growth. From strategy to launch, we build digital experiences that perform.",
-    images: ["/og-website-dev.png"],
+      "Digital experiences that convert. Custom UI/UX design, Next.js & React development, and 99+ Core Web Vitals performance.",
+    images: ["/og-web-development.png"],
   },
 };
 
@@ -50,24 +52,24 @@ const jsonLd = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Website Development",
-          item: "https://leadsinclick.com/website-development",
+          name: "Web Development",
+          item: "https://leadsinclick.com/web-development",
         },
       ],
     },
     {
       "@type": "WebPage",
-      "@id": "https://leadsinclick.com/website-development",
-      name: "Website Development Services",
+      "@id": "https://leadsinclick.com/web-development",
+      name: "Web Development Services — Digital Experiences That Convert",
       description:
-        "Custom, high-performance website development for growth-focused brands.",
-      url: "https://leadsinclick.com/website-development",
+        "Custom UI/UX design, full-stack Next.js web development, e-commerce, and conversion rate optimization for ambitious brands.",
+      url: "https://leadsinclick.com/web-development",
       isPartOf: { "@id": "https://leadsinclick.com" },
     },
     {
       "@type": "Service",
-      name: "Custom Website Development & CRO Design",
-      serviceType: "Web Design and Development",
+      name: "Custom Web Design & Full-Stack Development",
+      serviceType: "Web Development & UI/UX Design",
       provider: {
         "@type": "Organization",
         name: "Leads In Click",
@@ -75,7 +77,7 @@ const jsonLd = {
       },
       areaServed: "US",
       description:
-        "Blazing-fast, mobile-first websites engineered to convert visitors into qualified enquiries and paying customers.",
+        "Bespoke UI/UX design, Next.js and React engineering, CMS integration, technical SEO, and conversion rate optimization.",
     },
     {
       "@type": "Organization",
@@ -93,16 +95,68 @@ const jsonLd = {
   ],
 };
 
-export default function WebsiteDevPage() {
+export default function WebDevelopmentPage() {
   return (
-    <>
+    <main className="relative isolate min-h-screen overflow-x-hidden bg-[#0B0B0B] text-[#F5F5F5]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <WebsiteDev />
-      <TechStackMarquee />
-      <WebsiteServicesCards />
-    </>
+
+      {/* ✅ Global Page-Wide Beams Background (Single WebGL Instance) */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        aria-hidden="true"
+      >
+        <Beams
+          className="pointer-events-none"
+          color="#605f5fff"
+          beamWidth={140}
+          rotation={30}
+          speed={1}
+          glow={0.6}
+          waveLength={233}
+          depth={1}
+          sharpness={0.6}
+          twist={0}
+          fillLight={0.3}
+          brightness={1.6}
+          grain={0.35}
+          variation={0}
+          mouseInteraction
+          mouseStrength={1}
+          fade={0}
+          opacity={1}
+          intro
+          lightMode={false}
+        />
+
+        {/* Ambient Radial Glows (Teal & Lime tint) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 52% 34% at 50% 18%, rgba(22,184,197,.12), transparent 72%), radial-gradient(ellipse 56% 42% at 50% 78%, rgba(11,123,138,.16), transparent 72%)",
+          }}
+        />
+
+        {/* Subtle Film Grain */}
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E\")",
+          }}
+        />
+      </div>
+
+      {/* ✅ Page Sections */}
+      <div className="relative z-10">
+        <WebDevHero />
+        <WebDevTrustSection />
+        <WebDevProcessSection />
+        <WebDevClosingSection />
+      </div>
+    </main>
   );
 }
